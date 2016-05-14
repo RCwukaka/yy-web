@@ -1,0 +1,56 @@
+@CHARSET "UTF-8";
+
+.wrap {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 380px;
+	height: 480px;
+	margin-top: -240px;
+	margin-left: -190px;
+	text-align: center;
+	border-radius: 3px;
+}
+
+.sub {
+	padding: 20px;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+}
+
+.header {
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 40px;
+}
+
+
+.action_rp {
+	padding: 20px;
+}
+
+.form_security {
+	width: 130px;
+	height: 40px;
+	margin-top: 10px;
+	color: #7C908A;
+	border-radius: 3px;
+	padding: 15px;
+	font-size: 100%;
+	border: 1px solid #DFE1E8;
+}
+
+.content {
+	display: block;
+	width: 1366px;
+	height: 100%;
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+
+.r_class {
+	float: left;
+	margin-right: 159px;
+}

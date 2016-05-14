@@ -1,7 +1,5 @@
 package com.binghz.yy.entity.user;
 
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,16 +19,20 @@ public class UserEntity extends IdEntity {
 
 	@Column(name = "username", nullable = false)
 	private String userName;
-	@Column(name = "password")
+	@Column(name = "password",nullable = false)
 	private String password;
-	@Column(name = "userrealname", nullable = true)
-	private String userRealName;
-	@Column(name = "usersex", nullable = false)
-	private String userSex;
-	@Column(name = "useryear", nullable = false)
-	private int userYear;
-	@Column(name="nickname",nullable=false)
+	@Column(name = "nickname", nullable = true)
 	private String nickname;
+	@Column(name="imgSrc",nullable=false)
+	private String imgSrc;
+	@Column(name="email",nullable=false)
+	private String email;
+	@Column(name="phone",nullable=false)
+	private String phone;
+	@Column(name="position",nullable=false)
+	private String position;
+	@Column(name="introduce",nullable=false)
+	private String introduce;
 
 	public String getUserName() {
 		return userName;
@@ -48,30 +50,6 @@ public class UserEntity extends IdEntity {
 		this.password = password;
 	}
 
-	public String getUserRealName() {
-		return userRealName;
-	}
-
-	public void setUserRealName(String userRealName) {
-		this.userRealName = userRealName;
-	}
-
-	public String getUserSex() {
-		return userSex;
-	}
-
-	public void setUserSex(String userSex) {
-		this.userSex = userSex;
-	}
-
-	public int getUserYear() {
-		return userYear;
-	}
-
-	public void setUserYear(int userYear) {
-		this.userYear = userYear;
-	}
-
 	public String getNickname() {
 		return nickname;
 	}
@@ -80,4 +58,44 @@ public class UserEntity extends IdEntity {
 		this.nickname = nickname;
 	}
 
+	public String getImgSrc() {
+		return imgSrc;
+	}
+
+	public void setImgSrc(String imgSrc) {
+		this.imgSrc = imgSrc;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getIntroduce() {
+		return introduce;
+	}
+
+	public void setIntroduce(String introduce) {
+		this.introduce = introduce;
+	}
+	
 }
