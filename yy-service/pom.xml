@@ -8,4 +8,11 @@
   <artifactId>yy-service</artifactId>
   <name>yy-serivce</name>
   <description>服务集合模块</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.binghz.yy</groupId>
+  		<artifactId>yy-dao</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  </dependencies>
 </project>

@@ -6,4 +6,11 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>yy-dao</artifactId>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.binghz.yy</groupId>
+  		<artifactId>yy-common</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  </dependencies>
 </project>

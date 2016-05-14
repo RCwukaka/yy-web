@@ -8,4 +8,16 @@
   <artifactId>yy-control</artifactId>
   <name>yy-control</name>
   <description>控制类集合</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.binghz.yy</groupId>
+  		<artifactId>yy-service</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.binghz.yy</groupId>
+  		<artifactId>yy-common</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  </dependencies>
 </project>
