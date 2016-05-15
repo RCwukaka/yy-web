@@ -1,4 +1,4 @@
-package com.binghz.yy.entity.user;
+package com.binghz.yy.entity.common.user;
 
 
 import javax.persistence.Column;
@@ -21,17 +21,17 @@ public class UserEntity extends IdEntity {
 	private String userName;
 	@Column(name = "password",nullable = false)
 	private String password;
-	@Column(name = "nickname", nullable = true)
+	@Column(name = "nickname", nullable = false)
 	private String nickname;
-	@Column(name="imgSrc",nullable=false)
+	@Column(name="imgSrc",nullable=true)
 	private String imgSrc;
-	@Column(name="email",nullable=false)
+	@Column(name="email",nullable=true)
 	private String email;
-	@Column(name="phone",nullable=false)
+	@Column(name="phone",nullable=true)
 	private String phone;
-	@Column(name="position",nullable=false)
+	@Column(name="position",nullable=true)
 	private String position;
-	@Column(name="introduce",nullable=false)
+	@Column(name="introduce",nullable=true)
 	private String introduce;
 
 	public String getUserName() {

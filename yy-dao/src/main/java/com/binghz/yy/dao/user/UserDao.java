@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import com.binghz.yy.entity.user.UserEntity;
+import com.binghz.yy.entity.common.user.UserEntity;
 
 /*
  * 
@@ -24,9 +24,6 @@ public interface UserDao
 	
 	//查找多个用户
 	UserEntity findByIdIn(List<Long> ids);
-	
-	//根据sex得到用户男女分配
-	List<UserEntity> findByUserSex(String sex);
 	
 	//登录验证
 	UserEntity findByUserNameAndPasswordAndVaild(String userName,String password,Integer vaild);

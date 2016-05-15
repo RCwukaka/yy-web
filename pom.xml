@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.binghz.yy</groupId>
@@ -178,7 +178,7 @@
 				<db-url>jdbc:mysql://127.0.0.1:3306/master</db-url>
 				<db-username>root</db-username>
 				<db-password>123456</db-password>
-				<sessionDB-url>jdbc:mysql://127.0.0.1:3307/sessioncon</sessionDB-url>
+				<sessionDB-url>jdbc:mysql://127.0.0.1:3306/session</sessionDB-url>
 				<sessionDB-username>root</sessionDB-username>
 				<sessionDB-password>123456</sessionDB-password>
 			</properties>
@@ -189,7 +189,7 @@
 				<db-url>jdbc:mysql://127.0.0.1:3306/master</db-url>
 				<db-username>root</db-username>
 				<db-password>123456</db-password>
-				<sessionDB-url>jdbc:mysql://127.0.0.1:3306/sessioncon</sessionDB-url>
+				<sessionDB-url>jdbc:mysql://127.0.0.1:3306/session</sessionDB-url>
 				<sessionDB-username>root</sessionDB-username>
 				<sessionDB-password>123456</sessionDB-password>
 			</properties>
@@ -203,7 +203,7 @@
 				<db-url>jdbc:mysql://127.0.0.1:3306/master</db-url>
 				<db-username>root</db-username>
 				<db-password>123456</db-password>
-				<sessionDB-url>jdbc:mysql://127.0.0.1:3306/sessioncon</sessionDB-url>
+				<sessionDB-url>jdbc:mysql://127.0.0.1:3306/session</sessionDB-url>
 				<sessionDB-username>root</sessionDB-username>
 				<sessionDB-password>123456</sessionDB-password>
 			</properties>
@@ -215,5 +215,6 @@
   	<module>yy-web</module>
   	<module>yy-dao</module>
   	<module>yy-common</module>
+    <module>yy-session</module>
   </modules>
 </project>

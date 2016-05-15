@@ -1,4 +1,4 @@
-package com.binghz.yy.entity.jobSeeker;
+package com.binghz.yy.entity.common.jobSeeker;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -19,5 +19,10 @@
   		<artifactId>yy-common</artifactId>
   		<version>${project.version}</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.binghz.yy</groupId>
+  		<artifactId>yy-session</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
   </dependencies>
 </project>

@@ -1,18 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登陆</title>
-<link rel="stylesheet" href="/system-web/css/bootstrap.min.css">
-<link rel="stylesheet" href="/system-web/css/basepage.css">
-<script src="/system-web/js/jquery-2.1.4.min.js"></script>
+<link rel="stylesheet" href="/yy-web/css/bootstrap.min.css">
+<link rel="stylesheet" href="/yy-web/css/basepage.css">
+<script src="/yy-web/js/jquery-2.1.4.min.js"></script>
 <script>
 	$(document).ready(function() {
 		$("#btnRegister").click(function(){
-			window.location.href = "/system-web/register";
+			window.location.href = "/yy-web/register";
 		})
 		$("#btnLogin").click(function() {
 			var username = $("#username").val();
@@ -26,12 +25,12 @@
 			};
 			$.ajax({
 				type : "post",
-				url : "/system-web/userInform/loginIn",
+				url : "/yy-web/userInform/loginIn",
 				data : JSON.stringify(obj),
 				contentType : "application/json;charset=utf-8",
 				dataType : "json",
 				success : function(message) {
-					window.location.href = "/system-web/index";
+					window.location.href = "/yy-web/index";
 				}
 			});
 		});
@@ -39,7 +38,7 @@
 </script>
 <style type="text/css">
 body {
-	background: url("/system-web/img/loginbg.jpg") no-repeat;
+	background: url("/yy-web/img/loginbg.jpg") no-repeat;
 }
 
 .wrap {
@@ -97,6 +96,6 @@ body {
 			</div>
 		</div>
 	</div>
-	<script src="/system-web/js/bootstrap.min.js"></script>
+	<script src="/yy-web/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.binghz.yy.entity.role;
+package com.binghz.yy.entity.common.role;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

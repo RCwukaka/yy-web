@@ -1,4 +1,4 @@
-package com.binghz.yy.entity.news;
+package com.binghz.yy.entity.common.news;
 
 import java.util.Date;
 

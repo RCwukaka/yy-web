@@ -1,4 +1,4 @@
-package com.binghz.yy.entity.news;
+package com.binghz.yy.entity.common.news;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

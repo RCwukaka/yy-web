@@ -1,4 +1,4 @@
-package com.binghz.yy.entity.company;
+package com.binghz.yy.entity.common.company;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
