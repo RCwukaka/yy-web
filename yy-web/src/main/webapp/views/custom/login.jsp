@@ -5,13 +5,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登陆</title>
-<link rel="stylesheet" href="/yy-web/css/bootstrap.min.css">
-<link rel="stylesheet" href="/yy-web/css/basepage.css">
-<script src="/yy-web/js/jquery-2.1.4.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/basepage.css">
+<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$("#btnRegister").click(function(){
-			window.location.href = "/yy-web/register";
+		$("#btnRegister").click(function() {
+			window.location.href = "${pageContext.request.contextPath}/register";
 		})
 		$("#btnLogin").click(function() {
 			var username = $("#username").val();
@@ -25,12 +25,12 @@
 			};
 			$.ajax({
 				type : "post",
-				url : "/yy-web/userInform/loginIn",
+				url : "${pageContext.request.contextPath}/login",
 				data : JSON.stringify(obj),
 				contentType : "application/json;charset=utf-8",
 				dataType : "json",
 				success : function(message) {
-					window.location.href = "/yy-web/index";
+					window.location.href = "${pageContext.request.contextPath}/index";
 				}
 			});
 		});
@@ -38,7 +38,7 @@
 </script>
 <style type="text/css">
 body {
-	background: url("/yy-web/img/loginbg.jpg") no-repeat;
+	background: url("${pageContext.request.contextPath}/img/loginbg.jpg") no-repeat;
 }
 
 .wrap {
@@ -96,6 +96,6 @@ body {
 			</div>
 		</div>
 	</div>
-	<script src="/yy-web/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </body>
 </html>

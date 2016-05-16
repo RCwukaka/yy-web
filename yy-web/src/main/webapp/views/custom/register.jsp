@@ -1,23 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" 
+           uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="/system-web/css/bootstrap.min.css">
-<link rel="stylesheet" href="/system-web/css/basepage.css">
-<script src="/system-web/js/jquery-2.1.4.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/basepage.css">
+<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
 <title>注册</title>
 <script type="text/javascript">
 	function changeValidateCode(obj) {
 		var timenow = new Date().getTime();
-		obj.src = "/system-web/sercurity/securityCodeImageAction?d=" + timenow;
+		obj.src = "${pageContext.request.contextPath}/sercurity/securityCodeImageAction?d=" + timenow;
 	}
 	$.extend({
 		sendRegister : function(json) {
 			$.ajax({
 				type : "POST",
-				url : "/system-web/userInform/register",
+				url : "${pageContext.request.contextPath}/register",
 				data : JSON.stringify(json),
 				contentType : "application/json;charset=utf-8",
 				dataType : "json",
@@ -44,6 +46,7 @@
 				"nickname" : nickname,
 				"securityCode" : securityCode
 			};
+			$.sendRegister(obj);
 			if (!matchval.test($("input").attr('class'))) {
 				if (securityCode != "") {
 					if (confirmpassword == password) {
@@ -168,7 +171,7 @@
 								</div>
 								<div class="col-md-4" style="padding-left: 0">
 									<img alt="验证码"
-										src="/system-web/sercurity/securityCodeImageAction"
+										src="${pageContext.request.contextPath}/sercurity/securityCodeImageAction"
 										style="vertical-align: middle; width: 100%; height: 100%"
 										onclick="changeValidateCode(this)"><br />
 								</div>
@@ -187,7 +190,7 @@
 			</div>
 		</div>
 	</div>
-	<jsp:include page="/html/common/foot.html"></jsp:include>
-	<script src="/system-web/js/bootstrap.min.js"></script>
+	<c:import url="/html/common/foot.html" charEncoding="UTF-8"></c:import>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -6,9 +6,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="/yy-web/css/bootstrap.min.css">
-<link rel="stylesheet" href="/yy-web/css/basepage.css">
-<script src="/yy-web/js/jquery-2.1.4.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/basepage.css">
+<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
 <title>首页</title>
 </head> 
 <script>
@@ -48,6 +48,6 @@ $(function() {
 	<!-- 页面脚部html -->
 	<c:import url="/html/common/foot.html" charEncoding="UTF-8"></c:import>
 	<!-- 结束 -->
-	<script src="/yy-web/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </body>
 </html>

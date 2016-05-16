@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.binghz.yy</groupId>
-  <artifactId>yy</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
+	<groupId>com.binghz.yy</groupId>
+	<artifactId>yy</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-  <name>yy</name>
-  <url>http://maven.apache.org</url>
+	<name>yy</name>
+	<url>http://maven.apache.org</url>
 
-  <properties>
+	<properties>
 		<spring.version>4.2.5.RELEASE</spring.version>
 		<aspectj.version>1.8.4</aspectj.version>
 		<hibernate.version>4.3.8.Final</hibernate.version>
@@ -149,6 +150,11 @@
 			<artifactId>qiniu-java-sdk</artifactId>
 			<version>[7.0.0, 7.0.99]</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>rsms</finalName>
@@ -194,8 +200,8 @@
 				<sessionDB-password>123456</sessionDB-password>
 			</properties>
 			<activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 		</profile>
 		<profile>
 			<id>prod</id>
@@ -207,14 +213,14 @@
 				<sessionDB-username>root</sessionDB-username>
 				<sessionDB-password>123456</sessionDB-password>
 			</properties>
-		</profile>		
+		</profile>
 	</profiles>
-  <modules>
-  	<module>yy-service</module>
-  	<module>yy-control</module>
-  	<module>yy-web</module>
-  	<module>yy-dao</module>
-  	<module>yy-common</module>
-    <module>yy-session</module>
-  </modules>
+	<modules>
+		<module>yy-service</module>
+		<module>yy-control</module>
+		<module>yy-web</module>
+		<module>yy-dao</module>
+		<module>yy-common</module>
+		<module>yy-session</module>
+	</modules>
 </project>
