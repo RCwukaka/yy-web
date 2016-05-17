@@ -14,25 +14,7 @@
 			window.location.href = "${pageContext.request.contextPath}/register";
 		})
 		$("#btnLogin").click(function() {
-			var username = $("#username").val();
-			var password = $("#password").val();
-			var chk = document.getElementById('rememberPas');
-			var value = chk.checked;
-			var obj = {
-				"username" : username,
-				"password" : password,
-				"rememberPas" : value
-			};
-			$.ajax({
-				type : "post",
-				url : "${pageContext.request.contextPath}/login",
-				data : JSON.stringify(obj),
-				contentType : "application/json;charset=utf-8",
-				dataType : "json",
-				success : function(message) {
-					window.location.href = "${pageContext.request.contextPath}/index";
-				}
-			});
+			$("#formInfo").submit();
 		});
 	});
 </script>
@@ -79,21 +61,23 @@ body {
 	<div class="content">
 		<div class="wrap">
 			<div class="sign">欢迎登陆</div>
-			<div class="sub">
-				<input type="text" id="username" class="form-control"
-					placeholder="username" autofocus> <input type="password"
-					id="password" class="form-control" placeholder="password">
-				<div class="checkbox">
-					<a href="#" style="color: #fff; float: left">忘记密码</a> <label
-						style="color: #fff; float: right"> <input type="checkbox"
-						id="rememberPas"> 记住密码
-					</label>
+			<form action="${pageContext.request.contextPath}/login" method="post" id="formInfo">
+				<div class="sub">
+					<input type="text" id="username" class="form-control"
+						placeholder="username" autofocus> <input type="password"
+						id="password" class="form-control" placeholder="password">
+					<div class="checkbox">
+						<a href="#" style="color: #fff; float: left">忘记密码</a> <label
+							style="color: #fff; float: right"> <input type="checkbox"
+							id="rememberPas"> 记住密码
+						</label>
+					</div>
+					<button type="button" class=" btn btn-primary"
+						style="margin-right: 8%; width: 45%;" id="btnRegister">注册</button>
+					<button type="button" id="btnLogin" class=" btn btn-primary" style="width: 45%;"
+						id="btnLogin">登陆</button>
 				</div>
-				<button type="button" class=" btn btn-primary"
-					style="margin-right: 8%; width: 45%;" id="btnRegister">注册</button>
-				<button type="button" class=" btn btn-primary" style="width: 45%;"
-					id="btnLogin">登陆</button>
-			</div>
+			</form>
 		</div>
 	</div>
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>

@@ -12,10 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.binghz.control.common.BaseControl;
 import com.binghz.service.user.UserService;
 import com.binghz.yy.consts.common.CommonConstant;
 import com.binghz.yy.consts.common.HttpState;
@@ -29,7 +29,7 @@ import com.binghz.yy.utils.JsonUtils;
 import com.binghz.yy.utils.StringUtils;
 
 @Controller
-public class UserControl {
+public class UserControl extends BaseControl{
 
 	@Autowired
 	private UserService userService;
@@ -39,13 +39,10 @@ public class UserControl {
 	@ModelAttribute
 	public void initPath(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		model.addAttribute("code", Integer.valueOf(HttpState.HTTP_CHANNEL_SUCCESS));
-		String host = request.getHeader("host");
-
+		
 	}
-
-	@ResponseBody
 	@RequestMapping("login")
-	public ModelAndView loginIn(HttpServletRequest request, String username, String password) {
+	public ModelAndView loginIn(HttpServletRequest request, String username , String password) {
 		ModelAndView mv = new ModelAndView();
 		JsonMessage result = new JsonMessage();
 		if (username == null || password == null || StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
@@ -54,13 +51,13 @@ public class UserControl {
 		}
 		UserEntity user = userService.findByUserName(username);
 		if (StringUtils.equals(user.getPassword(), EncodeUtils.base64Md5(password))) {
-			mv.setViewName("/custom/index");
 			SessionEntity session = sessionService.addSession(request, user);
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("isLogin", true);
-			map.put("isAlive", true);
+			map.put("isLogin", isLogin(request, username));
+			map.put("isAlive", isAlive(request, username));
 			map.put("userInfo", JsonUtils.objectToString(session));
 			mv.addObject("map", map);
+			mv.setViewName("/custom/index");
 			mv.addObject(result.fill(HttpState.HTTP_CHANNEL_SUCCESS, HttpState.HTTP_CHANNEL_SUCCESS_STR));
 			return mv;
 		} else {
@@ -72,18 +69,24 @@ public class UserControl {
 
 	@RequestMapping("loginOut")
 	public String loginOut() {
-
+		
 		return "/custom/index";
 	}
 
 	@ResponseBody
-	@RequestMapping(value = { "register" }, method = { RequestMethod.GET })
-	public ModelAndView register(HttpServletRequest request, String username, String password, String nickname) {
+	@RequestMapping("register")
+	public ModelAndView register(HttpServletRequest request, String username, String password, String nickname, String securityCode) {
 		ModelAndView mv = new ModelAndView();
 		JsonMessage result = new JsonMessage();
+		System.out.println(username);
 		if (username == null || password == null || nickname == null || StringUtils.isBlank(username)
 				|| StringUtils.isBlank(nickname) || StringUtils.isBlank(password)) {
 			mv.setViewName("/custom/register");
+			return mv;
+		}
+		if(securityCode == null || securityCode != request.getAttribute("random")){
+			mv.setViewName("/custom/register");
+			mv.addObject("result","验证码错误");
 			return mv;
 		}
 		UserEntity user = new UserEntity();

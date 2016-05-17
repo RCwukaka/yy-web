@@ -40,23 +40,34 @@ public class SessionService {
 		}
 		return sessionDao.save(sessionEntity);
 	}
-
-	// 判断session
-	public Map<String, Object> isLoginOrAlive(HttpServletRequest request,
-			UserEntity userEntity) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		SessionEntity sessionEntity = sessionDao.findByUsername(userEntity
-				.getUserName());
+	
+	public boolean isLogin(HttpServletRequest request,String username){
+		SessionEntity sessionEntity = sessionDao.findByUsername(username);
 		if (sessionEntity == null) {
-			map.put("isLogin", false);
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public boolean isAlive(HttpServletRequest request,String username){
+		SessionEntity sessionEntity = sessionDao.findByUsername(username);
+		if (sessionEntity == null) {
+			return false;
 		} else {
-			map.put("isLogin", true);
 			if (sessionEntity.getDieTime().after(new Date())) {
-				map.put("isAlive", true);
+				return true;
 			} else {
-				map.put("isAlive", false);
+				return false;
 			}
 		}
-		return map;
+	}
+	
+	public boolean isValid(HttpServletRequest request,String username,String token){
+		SessionEntity sessionEntity = sessionDao.findByUsernameAndToken(username,token);
+		if (sessionEntity == null) {
+			return false;
+		} 
+		return true;
 	}
 }

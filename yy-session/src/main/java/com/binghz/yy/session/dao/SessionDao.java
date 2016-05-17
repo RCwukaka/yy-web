@@ -9,4 +9,6 @@ public interface SessionDao
 		extends PagingAndSortingRepository<SessionEntity, Long>, JpaSpecificationExecutor<SessionEntity> {
 	
 	SessionEntity findByUsername(String username);
+	
+	SessionEntity findByUsernameAndToken(String username,String token);
 }

@@ -13,21 +13,18 @@
 <script type="text/javascript">
 	function changeValidateCode(obj) {
 		var timenow = new Date().getTime();
-		obj.src = "${pageContext.request.contextPath}/sercurity/securityCodeImageAction?d=" + timenow;
+		obj.src = "${pageContext.request.contextPath}/sercurity/securityCodeImage?d=" + timenow;
 	}
 	$.extend({
 		sendRegister : function(json) {
 			$.ajax({
-				type : "POST",
+				type : "post",
 				url : "${pageContext.request.contextPath}/register",
-				data : JSON.stringify(json),
+				data : json,
 				contentType : "application/json;charset=utf-8",
 				dataType : "json",
 				success : function(message) {
-					$('#btnRegister').button('reset');
-					if (message.dataMap.type == "success") {
-						$btn.button("返回首页");
-					}
+					
 				}
 			});
 		}
@@ -163,6 +160,7 @@
 									placeholder="重复密码">
 							</div>
 						</div>
+						${result}
 						<div class="form-group">
 							<div class="row col-sm-offset-1">
 								<div class="col-md-6">
@@ -171,7 +169,7 @@
 								</div>
 								<div class="col-md-4" style="padding-left: 0">
 									<img alt="验证码"
-										src="${pageContext.request.contextPath}/sercurity/securityCodeImageAction"
+										src="${pageContext.request.contextPath}/sercurity/securityCodeImage"
 										style="vertical-align: middle; width: 100%; height: 100%"
 										onclick="changeValidateCode(this)"><br />
 								</div>
