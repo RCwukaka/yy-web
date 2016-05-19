@@ -1,8 +1,6 @@
 package com.binghz.yy.session.service;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,11 +12,14 @@ import com.binghz.yy.entity.common.user.UserEntity;
 import com.binghz.yy.session.dao.SessionDao;
 import com.binghz.yy.session.entity.SessionEntity;
 import com.binghz.yy.utils.UUIDUtils;
+import com.binghz.yy.dao.QueryDao;
 
 @Service
 public class SessionService {
 	@Autowired
 	private SessionDao sessionDao;
+	@Autowired
+	private QueryDao queryDao;
 
 	// 添加sesison
 	public SessionEntity addSession(HttpServletRequest request, UserEntity userEntity) {
@@ -40,8 +41,27 @@ public class SessionService {
 		}
 		return sessionDao.save(sessionEntity);
 	}
+	//存储验证码
+	public SessionEntity addSession(HttpServletRequest request){
+		SessionEntity sessionEntity = new SessionEntity();
+		sessionEntity.setSessionId(request.getSession().getId());
+		sessionEntity.setToken(request.getSession().getAttribute("random").toString());
+		sessionDao.save(sessionEntity);
+		return sessionEntity;
+	}
 	
-	public boolean isLogin(HttpServletRequest request,String username){
+	public void delSession(String sessionid){
+		String sql = "delete from session where sessionid="+sessionid;
+		queryDao.query(sql);
+	}
+	
+	public void delSessionByUsername(String username){
+		String sql = "delete from session.session where username="+username;
+		System.out.println(sql);
+		queryDao.query(sql);
+	}
+	
+	public boolean isLogin(String username){
 		SessionEntity sessionEntity = sessionDao.findByUsername(username);
 		if (sessionEntity == null) {
 			return false;
@@ -50,7 +70,7 @@ public class SessionService {
 		}
 	}
 	
-	public boolean isAlive(HttpServletRequest request,String username){
+	public boolean isAlive(String username){
 		SessionEntity sessionEntity = sessionDao.findByUsername(username);
 		if (sessionEntity == null) {
 			return false;
@@ -63,11 +83,19 @@ public class SessionService {
 		}
 	}
 	
-	public boolean isValid(HttpServletRequest request,String username,String token){
+	public boolean isValid(String username,String token){
 		SessionEntity sessionEntity = sessionDao.findByUsernameAndToken(username,token);
 		if (sessionEntity == null) {
 			return false;
 		} 
 		return true;
+	}
+	
+	public SessionEntity findByUsername(String username){
+		return sessionDao.findByUsername(username);
+	}
+	
+	public SessionEntity findBySessionId(String sessionId){
+		return sessionDao.findBySessionId(sessionId);
 	}
 }

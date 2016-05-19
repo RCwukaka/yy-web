@@ -19,9 +19,8 @@
 		sendRegister : function(json) {
 			$.ajax({
 				type : "post",
-				url : "${pageContext.request.contextPath}/register",
+				url : "${pageContext.request.contextPath}/register/${sessionId}",
 				data : json,
-				contentType : "application/json;charset=utf-8",
 				dataType : "json",
 				success : function(message) {
 					
@@ -38,10 +37,10 @@
 			var confirmpassword = $("#confirmpassword").val();
 			var matchval = "？*has-error";
 			var obj = {
-				"username" : username,
-				"password" : password,
-				"nickname" : nickname,
-				"securityCode" : securityCode
+				username : username,
+				password : password,
+				nickname : nickname,
+				securityCode : securityCode,
 			};
 			$.sendRegister(obj);
 			if (!matchval.test($("input").attr('class'))) {

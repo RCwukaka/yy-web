@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,11 +26,10 @@ import com.binghz.yy.session.entity.SessionEntity;
 import com.binghz.yy.session.service.SessionService;
 import com.binghz.yy.utils.EncodeUtils;
 import com.binghz.yy.utils.JsonMessage;
-import com.binghz.yy.utils.JsonUtils;
 import com.binghz.yy.utils.StringUtils;
 
 @Controller
-public class UserControl extends BaseControl{
+public class UserControl extends BaseControl {
 
 	@Autowired
 	private UserService userService;
@@ -37,70 +37,80 @@ public class UserControl extends BaseControl{
 	private SessionService sessionService;
 
 	@ModelAttribute
-	public void initPath(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
-		model.addAttribute("code", Integer.valueOf(HttpState.HTTP_CHANNEL_SUCCESS));
-		
-	}
-	@RequestMapping("login")
-	public ModelAndView loginIn(HttpServletRequest request, String username , String password) {
-		ModelAndView mv = new ModelAndView();
-		JsonMessage result = new JsonMessage();
-		if (username == null || password == null || StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
-			mv.setViewName("/custom/login");
-			return mv;
-		}
-		UserEntity user = userService.findByUserName(username);
-		if (StringUtils.equals(user.getPassword(), EncodeUtils.base64Md5(password))) {
-			SessionEntity session = sessionService.addSession(request, user);
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("isLogin", isLogin(request, username));
-			map.put("isAlive", isAlive(request, username));
-			map.put("userInfo", JsonUtils.objectToString(session));
-			mv.addObject("map", map);
-			mv.setViewName("/custom/index");
-			mv.addObject(result.fill(HttpState.HTTP_CHANNEL_SUCCESS, HttpState.HTTP_CHANNEL_SUCCESS_STR));
-			return mv;
-		} else {
-			mv.addObject(result.fill(HttpState.HTTP_USERNAMEPASSWD_ERROR, HttpState.HTTP_USERNAMEPASSWD_ERROR_STR));
-			mv.setViewName("/custom/login");
-			return mv;
-		}
-	}
+	public void initPath(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		model.addAttribute("code",
+				Integer.valueOf(HttpState.HTTP_CHANNEL_SUCCESS));
 
-	@RequestMapping("loginOut")
-	public String loginOut() {
-		
-		return "/custom/index";
 	}
 
 	@ResponseBody
-	@RequestMapping("register")
-	public ModelAndView register(HttpServletRequest request, String username, String password, String nickname, String securityCode) {
-		ModelAndView mv = new ModelAndView();
+	@RequestMapping("login")
+	public JsonMessage loginIn(HttpServletRequest request, String username,
+			String password) {
 		JsonMessage result = new JsonMessage();
-		System.out.println(username);
-		if (username == null || password == null || nickname == null || StringUtils.isBlank(username)
-				|| StringUtils.isBlank(nickname) || StringUtils.isBlank(password)) {
-			mv.setViewName("/custom/register");
-			return mv;
+		if (username == null || password == null
+				|| StringUtils.isBlank(username)
+				|| StringUtils.isBlank(password)) {
+			return result.fill(HttpState.HTTP_PARAME_NORMAL,
+					HttpState.HTTP_PARAME_NORMAL_STR); // 参数错误
 		}
-		if(securityCode == null || securityCode != request.getAttribute("random")){
-			mv.setViewName("/custom/register");
-			mv.addObject("result","验证码错误");
-			return mv;
+		UserEntity user = userService.findByUserName(username);
+		if (StringUtils.equals(user.getPassword(),
+				EncodeUtils.base64Md5(password))) {
+			sessionService.addSession(request, user);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("usename", user.getUserName());
+			return result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
+					HttpState.HTTP_CHANNEL_SUCCESS_STR, map);
+		} else {
+			return result.fill(HttpState.HTTP_USERNAMEPASSWD_ERROR,
+					HttpState.HTTP_USERNAMEPASSWD_ERROR_STR);
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping("loginOut/{username}")
+	public JsonMessage loginOut(@PathVariable(value = "username") String username) {
+		JsonMessage result = new JsonMessage();
+		if (username == null ||StringUtils.isBlank(username)) {
+			return result.fill(HttpState.HTTP_PARAME_NORMAL,
+					HttpState.HTTP_PARAME_NORMAL_STR); // 参数错误
+		}
+		sessionService.delSessionByUsername(username);
+		return result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
+				HttpState.HTTP_CHANNEL_SUCCESS_STR);
+	}
+
+	@ResponseBody
+	@RequestMapping("register/{sessionId}")
+	public JsonMessage register(HttpServletRequest request, String username,
+			String password, String nickname, String securityCode,
+			@PathVariable(value = "sessionId") String sessionId) {
+		JsonMessage result = new JsonMessage();
+		if (username == null || password == null || nickname == null
+				|| StringUtils.isBlank(username)
+				|| StringUtils.isBlank(nickname)
+				|| StringUtils.isBlank(password)) {
+			return result.fill(HttpState.HTTP_PARAME_NORMAL,
+					HttpState.HTTP_PARAME_NORMAL_STR); // 参数错误
+		}
+		if (securityCode == null
+				|| !securityCode.equals(sessionService
+						.findBySessionId(sessionId).getToken())) {
+			return result.fill(HttpState.HTTP_PARAME_NORMAL, "验证码错误"); // 参数错误
 		}
 		UserEntity user = new UserEntity();
 		password = password.trim();
 		if (StringUtils.isBlank(password)) {
-			mv.addObject(result.fill(HttpState.HTTP_PARAME_NORMAL, HttpState.HTTP_PARAME_NORMAL_STR)); // 参数错误
-			mv.setViewName("/custom/register");
-			return mv;
+			return result.fill(HttpState.HTTP_PARAME_NORMAL,
+					HttpState.HTTP_PARAME_NORMAL_STR); // 参数错误
 		}
 		if (userService.isRepeat(username)) {
-			mv.addObject(result.fill(UserConstant.USER_REGISTER_USERNAME, UserConstant.USER_REGISTER_USERNAME_STR)); // 账号已占用
-			mv.setViewName("/custom/register");
-			return mv;
+			return result.fill(UserConstant.USER_REGISTER_USERNAME,
+					UserConstant.USER_REGISTER_USERNAME_STR); // 账号已占用
 		}
+		sessionService.delSession(sessionId);
 		user.setUserName(username);
 		user.setValid(1);
 		user.setCreateDate(new Date());
@@ -108,15 +118,45 @@ public class UserControl extends BaseControl{
 		user.setPassword(EncodeUtils.base64Md5(password));
 		user.setUpdateDate(new Date());
 		user.setImgSrc(CommonConstant.USER_DEFAULT_IMG);
-		SessionEntity session = sessionService.addSession(request, user);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("isLogin", true);
-		map.put("isAlive", true);
-		map.put("userInfo", JsonUtils.objectToString(session));
-		mv.addObject("map", map);
-		result.fill(HttpState.HTTP_CHANNEL_SUCCESS, HttpState.HTTP_CHANNEL_SUCCESS_STR);
-		mv.addObject(result);
+		sessionService.addSession(request, user);
+		userService.save(user);
+		return result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
+				HttpState.HTTP_CHANNEL_SUCCESS_STR);
+	}
+
+	@ResponseBody
+	@RequestMapping("loginView")
+	public ModelAndView loginPage() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/custom/login");
+		return mv;
+	}
+
+	@ResponseBody
+	@RequestMapping("registerView")
+	public ModelAndView registerPage(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("sessionId", request.getSession().getId());
+		mv.setViewName("/custom/register");
+		return mv;
+	}
+
+	@ResponseBody
+	@RequestMapping("index/{username}")
+	public ModelAndView index(HttpServletRequest request,
+			@PathVariable(value = "username") String username) {
+		ModelAndView mv = new ModelAndView();
+		if(username==null){
+			mv.setViewName("/custom/index");
+			return mv;
+		}
+		mv.addObject("isLogin", isLogin(username));
+		mv.addObject("isAlive", isAlive(username));
+		SessionEntity sessionEntity = sessionService.findByUsername(username);
+		mv.addObject("imgSrc", sessionEntity.getImgSrc());
+		mv.addObject("token", sessionEntity.getToken());
 		mv.setViewName("/custom/index");
 		return mv;
 	}
+	
 }

@@ -11,10 +11,24 @@
 <script>
 	$(document).ready(function() {
 		$("#btnRegister").click(function() {
-			window.location.href = "${pageContext.request.contextPath}/register";
+			window.location.href = "${pageContext.request.contextPath}/registerView";
 		})
 		$("#btnLogin").click(function() {
-			$("#formInfo").submit();
+			var username = $("#username").val();
+			var password = $("#password").val();
+			var obj = {
+				"username" : username,
+				"password" : password
+			};
+			$.ajax({
+				type : "post",
+				url : "${pageContext.request.contextPath}/login",
+				data : obj,
+				dataType : "json",
+				success : function(message) {
+					window.location.href = "${pageContext.request.contextPath}/index/"+username;
+				}
+			});
 		});
 	});
 </script>
@@ -61,7 +75,6 @@ body {
 	<div class="content">
 		<div class="wrap">
 			<div class="sign">欢迎登陆</div>
-			<form action="${pageContext.request.contextPath}/login" method="post" id="formInfo">
 				<div class="sub">
 					<input type="text" id="username" class="form-control"
 						placeholder="username" autofocus> <input type="password"
@@ -77,7 +90,6 @@ body {
 					<button type="button" id="btnLogin" class=" btn btn-primary" style="width: 45%;"
 						id="btnLogin">登陆</button>
 				</div>
-			</form>
 		</div>
 	</div>
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>

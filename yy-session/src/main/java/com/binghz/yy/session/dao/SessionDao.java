@@ -10,5 +10,8 @@ public interface SessionDao
 	
 	SessionEntity findByUsername(String username);
 	
+	SessionEntity findBySessionId(String sessionId);
+	
 	SessionEntity findByUsernameAndToken(String username,String token);
+	
 }
