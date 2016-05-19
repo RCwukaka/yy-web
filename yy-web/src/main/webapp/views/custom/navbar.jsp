@@ -78,8 +78,17 @@
 							<li role="separator" class="divider"></li>
 							<li><a href='${pageContext.request.contextPath}/account/collects/${token}' data-click="collects" class="req">收藏的文章</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href='${pageContext.request.contextPath}/loginOut/${token}' data-click="loginout" id="req">退出</a></li>
+							<li><a data-click="loginout" id="req">退出</a></li>
 						</ul></li>
+						<script>
+						$(document).ready(function(){
+							$("#req").click(function(){
+								$.get("${pageContext.request.contextPath}/loginOut/${token}",function(data,status){
+									window.location.href = "${pageContext.request.contextPath}/index";
+								  });
+							});
+						})
+						</script>
 				</ul>
 			</c:otherwise>
 			</c:choose>
