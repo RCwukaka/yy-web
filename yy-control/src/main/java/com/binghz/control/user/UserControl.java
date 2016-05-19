@@ -58,9 +58,10 @@ public class UserControl extends BaseControl {
 		UserEntity user = userService.findByUserName(username);
 		if (StringUtils.equals(user.getPassword(),
 				EncodeUtils.base64Md5(password))) {
-			sessionService.addSession(request, user);
+			SessionEntity sessionEntity = sessionService.addSession(request, user);
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("usename", user.getUserName());
+			map.put("token", sessionEntity.getToken());
 			return result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
 					HttpState.HTTP_CHANNEL_SUCCESS_STR, map);
 		} else {
@@ -70,16 +71,20 @@ public class UserControl extends BaseControl {
 	}
 
 	@ResponseBody
-	@RequestMapping("loginOut/{username}")
-	public JsonMessage loginOut(@PathVariable(value = "username") String username) {
+	@RequestMapping("loginOut/{token}")
+	public ModelAndView loginOut(HttpServletRequest request,@PathVariable(value = "token") String token) {
 		JsonMessage result = new JsonMessage();
-		if (username == null ||StringUtils.isBlank(username)) {
-			return result.fill(HttpState.HTTP_PARAME_NORMAL,
-					HttpState.HTTP_PARAME_NORMAL_STR); // 参数错误
+		ModelAndView mv = new ModelAndView();
+		if(sessionService.findByToken(token)==null||token==null){
+			return mv.addObject("info",result.fill(HttpState.HTTP_PARAME_NORMAL,
+					HttpState.HTTP_PARAME_NORMAL_STR)); // 参数错误
+		}else{
+			sessionService.delSessionByToken(token);
+			mv.addObject(result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
+					HttpState.HTTP_CHANNEL_SUCCESS_STR));
+			mv.setViewName("/custom/index");
+			return mv;
 		}
-		sessionService.delSessionByUsername(username);
-		return result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
-				HttpState.HTTP_CHANNEL_SUCCESS_STR);
 	}
 
 	@ResponseBody
@@ -122,10 +127,12 @@ public class UserControl extends BaseControl {
 		user.setPassword(EncodeUtils.base64Md5(password));
 		user.setUpdateDate(new Date());
 		user.setImgSrc(CommonConstant.USER_DEFAULT_IMG);
-		sessionService.addSession(request, user);
+		SessionEntity sessionEntity = sessionService.addSession(request, user);
+		Map<String, String> map = new HashMap<String,String>();
 		userService.save(user);
+		map.put("token", sessionEntity.getToken());
 		return result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
-				HttpState.HTTP_CHANNEL_SUCCESS_STR);
+				HttpState.HTTP_CHANNEL_SUCCESS_STR,map);
 	}
 
 	@ResponseBody
@@ -146,19 +153,21 @@ public class UserControl extends BaseControl {
 	}
 
 	@ResponseBody
-	@RequestMapping("index/{username}")
-	public ModelAndView index(HttpServletRequest request,
-			@PathVariable(value = "username") String username) {
+	@RequestMapping("index/{token}")
+	public ModelAndView index(HttpServletRequest request,@PathVariable(value="token")String token) {
 		ModelAndView mv = new ModelAndView();
-		if(username==null){
+		if(token==null){
 			mv.setViewName("/custom/index");
 			return mv;
 		}
-		mv.addObject("isLogin", isLogin(username));
-		mv.addObject("isAlive", isAlive(username));
-		SessionEntity sessionEntity = sessionService.findByUsername(username);
+		SessionEntity sessionEntity = sessionService.findByToken(token);
+		if(sessionEntity==null){
+			mv.setViewName("/custom/index");
+		}
+		mv.addObject("isLogin", isLogin(token));
+		mv.addObject("isAlive", isAlive(token));
 		mv.addObject("imgSrc", sessionEntity.getImgSrc());
-		mv.addObject("token", sessionEntity.getToken());
+		mv.addObject("token", token);
 		mv.setViewName("/custom/index");
 		return mv;
 	}

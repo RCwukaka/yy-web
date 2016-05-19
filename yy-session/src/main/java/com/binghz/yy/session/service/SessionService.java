@@ -65,8 +65,13 @@ public class SessionService {
 		queryDao.update(sql);
 	}
 	
-	public boolean isLogin(String username){
-		SessionEntity sessionEntity = sessionDao.findByUsername(username);
+	public void delSessionByToken(String token){
+		String sql = "delete from session.redis where token='"+token+"'";
+		queryDao.update(sql);
+	}
+	
+	public boolean isLogin(String token){
+		SessionEntity sessionEntity = sessionDao.findByToken(token);
 		if (sessionEntity == null) {
 			return false;
 		}else{
@@ -74,8 +79,8 @@ public class SessionService {
 		}
 	}
 	
-	public boolean isAlive(String username){
-		SessionEntity sessionEntity = sessionDao.findByUsername(username);
+	public boolean isAlive(String token){
+		SessionEntity sessionEntity = sessionDao.findByToken(token);
 		if (sessionEntity == null) {
 			return false;
 		} else {
@@ -95,11 +100,15 @@ public class SessionService {
 		return true;
 	}
 	
-	public SessionEntity findByUsername(String username){
-		return sessionDao.findByUsername(username);
+	public SessionEntity findByUsername(String username,String token){
+		return sessionDao.findByUsernameAndToken(username,token);
 	}
 	
 	public SessionEntity findBySessionId(String sessionId){
 		return sessionDao.findBySessionId(sessionId);
+	}
+	
+	public SessionEntity findByToken(String token){
+		return sessionDao.findByToken(token);
 	}
 }

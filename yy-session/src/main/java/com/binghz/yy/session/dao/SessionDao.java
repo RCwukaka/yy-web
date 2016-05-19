@@ -14,4 +14,5 @@ public interface SessionDao
 	
 	SessionEntity findByUsernameAndToken(String username,String token);
 	
+	SessionEntity findByToken(String token);
 }
