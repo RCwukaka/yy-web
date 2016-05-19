@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.binghz.control.common.BaseControl;
@@ -22,12 +23,17 @@ public class SercurityControl extends BaseControl {
 	@Autowired
 	private SessionService sessionService;
 
-	@RequestMapping("securityCodeImage")
-	public void excute(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping("securityCodeImage/{sessionId}")
+	public void excute(HttpServletRequest request, HttpServletResponse response,@PathVariable(value = "sessionId") String sessionId) {
 		VerificationCodeUtils verification = VerificationCodeUtils.Instance();
 		String code = verification.getVerificationCodeValue();
 		request.getSession().setAttribute("random", code);
-		sessionService.addSession(request);
+		if(sessionService.findBySessionId(sessionId)!=null){
+			sessionService.delSession(sessionId);
+			sessionService.addSession(request);
+		}else{
+			sessionService.addSession(request);
+		}
 		ByteArrayInputStream inputStream = verification.getImage();
 		byte[] data = new byte[2024];
 		try {

@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
-@Table(name = "session")
+@Table(name = "redis")
 @JsonIgnoreProperties({"id","sessionId","dieTime"})
 public class SessionEntity {
 	@Id

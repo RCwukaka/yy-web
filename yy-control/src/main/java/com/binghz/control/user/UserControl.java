@@ -92,25 +92,29 @@ public class UserControl extends BaseControl {
 				|| StringUtils.isBlank(username)
 				|| StringUtils.isBlank(nickname)
 				|| StringUtils.isBlank(password)) {
+			sessionService.delSession(sessionId);
 			return result.fill(HttpState.HTTP_PARAME_NORMAL,
 					HttpState.HTTP_PARAME_NORMAL_STR); // 参数错误
 		}
 		if (securityCode == null
 				|| !securityCode.equals(sessionService
 						.findBySessionId(sessionId).getToken())) {
+			sessionService.delSession(sessionId);
 			return result.fill(HttpState.HTTP_PARAME_NORMAL, "验证码错误"); // 参数错误
 		}
 		UserEntity user = new UserEntity();
 		password = password.trim();
 		if (StringUtils.isBlank(password)) {
+			sessionService.delSession(sessionId);
 			return result.fill(HttpState.HTTP_PARAME_NORMAL,
 					HttpState.HTTP_PARAME_NORMAL_STR); // 参数错误
 		}
 		if (userService.isRepeat(username)) {
+			sessionService.delSession(sessionId);
 			return result.fill(UserConstant.USER_REGISTER_USERNAME,
 					UserConstant.USER_REGISTER_USERNAME_STR); // 账号已占用
 		}
-		sessionService.delSession(sessionId);
+		sessionService.delNoUseSession(sessionId,securityCode);
 		user.setUserName(username);
 		user.setValid(1);
 		user.setCreateDate(new Date());

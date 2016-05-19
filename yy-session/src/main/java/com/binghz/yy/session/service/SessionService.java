@@ -51,14 +51,18 @@ public class SessionService {
 	}
 	
 	public void delSession(String sessionid){
-		String sql = "delete from session where sessionid="+sessionid;
-		queryDao.query(sql);
+		String sql = "delete from session.redis where sessionid='"+sessionid+"'";
+		queryDao.update(sql);
+	}
+	
+	public void delNoUseSession(String sessionId ,String token){
+		String sql = "delete from session.redis where sessionid='"+sessionId+"' and token='"+token+"'";
+		queryDao.update(sql);
 	}
 	
 	public void delSessionByUsername(String username){
-		String sql = "delete from session.session where username="+username;
-		System.out.println(sql);
-		queryDao.query(sql);
+		String sql = "delete from session.redis where username='"+username+"'";
+		queryDao.update(sql);
 	}
 	
 	public boolean isLogin(String username){
