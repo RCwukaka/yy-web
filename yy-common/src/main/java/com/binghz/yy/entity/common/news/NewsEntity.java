@@ -20,6 +20,8 @@ public class NewsEntity extends IdEntity{
 	private Integer status;
 	@Column(name="newsurl")
 	private String newsUrl;
+	@Column(name="authorId")
+	private Long authorid;
 	
 	public String getContent() {
 		return content;
@@ -71,6 +73,14 @@ public class NewsEntity extends IdEntity{
 
 	public void setNewsUrl(String newsUrl) {
 		this.newsUrl = newsUrl;
+	}
+
+	public Long getAuthorid() {
+		return authorid;
+	}
+
+	public void setAuthorid(Long authorid) {
+		this.authorid = authorid;
 	}
 	
 }
