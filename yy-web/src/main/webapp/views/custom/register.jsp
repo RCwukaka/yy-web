@@ -13,7 +13,7 @@
 <script type="text/javascript">
 	function changeValidateCode(obj) {
 		var timenow = new Date().getTime();
-		obj.src = "${pageContext.request.contextPath}/sercurity/securityCodeImage?d=" + timenow;
+		obj.src = "${pageContext.request.contextPath}/sercurity/securityCodeImage/${sessionId}?d=" + timenow;
 	}
 	$.extend({
 		sendRegister : function(json) {
@@ -22,8 +22,14 @@
 				url : "${pageContext.request.contextPath}/register/${sessionId}",
 				data : json,
 				dataType : "json",
-				success : function(message) {
-					
+				success : function(date) {
+					if(date.code!=0){
+						alert(date.result);
+					}else{
+						if(confirm("是否跳转到首页")){
+							window.location.href = "${pageContext.request.contextPath}/index/"+date.map.token;
+						}
+					}
 				}
 			});
 		}
@@ -168,7 +174,7 @@
 								</div>
 								<div class="col-md-4" style="padding-left: 0">
 									<img alt="验证码"
-										src="${pageContext.request.contextPath}/sercurity/securityCodeImage"
+										src="${pageContext.request.contextPath}/sercurity/securityCodeImage/${sessionId}"
 										style="vertical-align: middle; width: 100%; height: 100%"
 										onclick="changeValidateCode(this)"><br />
 								</div>

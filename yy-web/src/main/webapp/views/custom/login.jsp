@@ -26,7 +26,11 @@
 				data : obj,
 				dataType : "json",
 				success : function(message) {
-					window.location.href = "${pageContext.request.contextPath}/index/"+username;
+					if(message.code!=0){
+						alert(message.result);
+					}else{
+						window.location.href = "${pageContext.request.contextPath}/index/"+message.map.token;
+					}
 				}
 			});
 		});

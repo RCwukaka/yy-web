@@ -80,8 +80,6 @@ public class UserControl extends BaseControl {
 					HttpState.HTTP_PARAME_NORMAL_STR)); // 参数错误
 		}else{
 			sessionService.delSessionByToken(token);
-			mv.addObject(result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
-					HttpState.HTTP_CHANNEL_SUCCESS_STR));
 			mv.setViewName("/custom/index");
 			return mv;
 		}
