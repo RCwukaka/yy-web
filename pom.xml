@@ -177,44 +177,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	<profiles>
-		<profile>
-			<id>test</id>
-			<properties>
-				<db-url>jdbc:mysql://127.0.0.1:3306/master</db-url>
-				<db-username>root</db-username>
-				<db-password>123456</db-password>
-				<sessionDB-url>jdbc:mysql://127.0.0.1:3306/session</sessionDB-url>
-				<sessionDB-username>root</sessionDB-username>
-				<sessionDB-password>123456</sessionDB-password>
-			</properties>
-		</profile>
-		<profile>
-			<id>dev</id>
-			<properties>
-				<db-url>jdbc:mysql://127.0.0.1:3306/master</db-url>
-				<db-username>root</db-username>
-				<db-password>123456</db-password>
-				<sessionDB-url>jdbc:mysql://127.0.0.1:3306/session</sessionDB-url>
-				<sessionDB-username>root</sessionDB-username>
-				<sessionDB-password>123456</sessionDB-password>
-			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
-		<profile>
-			<id>prod</id>
-			<properties>
-				<db-url>jdbc:mysql://127.0.0.1:3306/master</db-url>
-				<db-username>root</db-username>
-				<db-password>123456</db-password>
-				<sessionDB-url>jdbc:mysql://127.0.0.1:3306/session</sessionDB-url>
-				<sessionDB-username>root</sessionDB-username>
-				<sessionDB-password>123456</sessionDB-password>
-			</properties>
-		</profile>
-	</profiles>
 	<modules>
 		<module>yy-service</module>
 		<module>yy-control</module>

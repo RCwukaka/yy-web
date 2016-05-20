@@ -10,22 +10,27 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/basepage.css">
 <script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
 <title>首页</title>
-</head> 
+</head>
 <script>
 $(function() {  
     $('#myTabs a').click(function(e) {  
         e.preventDefault();  
         $(this).tab('show');  
-    });  
+    }); 
+    $(".newsname").each(function(){
+    	var h = $(this).attr("href");
+    	var token = $("#token").text();
+    	$(this).attr("href",h+"?token="+token);
+    })
 });  
 </script>
 <body>
 	<jsp:include page="navbar.jsp"></jsp:include>
+	<p class="display:none" id="token">${token}</p>
 	<div class="content">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12">
-					<div class="alert alert-warning" role="alert">前端重新做，求nodejs小伙伴</div>
 					<!-- 首页image滚动html -->
 					<c:import url="/html/index/index_news_image.html" charEncoding="UTF-8"></c:import>
 					<!-- 结束 -->
@@ -39,7 +44,7 @@ $(function() {
 				</div>
 				<div class="col-md-9">
 					<!-- 首页内容html -->
-					<c:import url="/html/index/index_news_content.html" charEncoding="UTF-8"></c:import>
+					<c:import url="${ctx}" charEncoding="UTF-8"></c:import>
 					<!-- 结束 -->
 				</div>
 			</div>

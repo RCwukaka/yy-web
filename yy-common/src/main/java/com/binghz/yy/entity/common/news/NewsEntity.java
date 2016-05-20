@@ -5,8 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.binghz.yy.entity.IdEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name="news")
+@JsonIgnoreProperties({"content"})
 public class NewsEntity extends IdEntity{
 	@Column(name="title")
 	private String title;
@@ -22,6 +24,8 @@ public class NewsEntity extends IdEntity{
 	private String newsUrl;
 	@Column(name="authorid")
 	private Long authorid;
+	@Column(name="newsimage")
+	private String newsimage;
 	
 	public String getContent() {
 		return content;
@@ -82,5 +86,12 @@ public class NewsEntity extends IdEntity{
 	public void setAuthorid(Long authorid) {
 		this.authorid = authorid;
 	}
-	
+
+	public String getNewsimage() {
+		return newsimage;
+	}
+
+	public void setNewsimage(String newsimage) {
+		this.newsimage = newsimage;
+	}
 }

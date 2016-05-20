@@ -35,7 +35,7 @@ public class NewsService {
 	 * 返回对应状态的新闻
 	 */
 	public List<Map<String,Object>> findNewsByStatus(Integer status){
-		String sql = "select * from news where status="+status;
+		String sql = "select * from news where status="+status+" order by create_date desc";
 		List<Map<String,Object>> map = queryDao.queryMap(sql);
 		return map;
 	}

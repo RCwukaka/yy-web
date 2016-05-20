@@ -50,14 +50,10 @@
 			<div class="col-md-8">
 				<input type="text" class="form-control" id="title" placeholder="新闻标题20字以内"><br>
 				<textarea class="form-control" rows="3" id="briefContent" placeholder="100字文章概要"></textarea>
-				<div class="form-group">
-					<label for="exampleInputFile">新闻图片</label> <input type="file"
-						id="exampleInputFile">
-				</div>
+				<br>
 				<textarea id='newsContent'
 					style='height: 500px; max-height: 800px; width: 100%;'></textarea>
 				<button class="btn btn-warning" id="send">提交</button>
-				<button class="btn btn-primary" id="btnLogin">预览</button>
 				<br>
 			</div>
 		</div>

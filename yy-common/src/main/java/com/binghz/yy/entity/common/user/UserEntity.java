@@ -33,6 +33,8 @@ public class UserEntity extends IdEntity {
 	private String position;
 	@Column(name="introduce",nullable=true)
 	private String introduce;
+	@Column(name="articlenum")
+	private Integer articlenum;
 
 	public String getUserName() {
 		return userName;
@@ -96,6 +98,14 @@ public class UserEntity extends IdEntity {
 
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
+	}
+
+	public Integer getArticlenum() {
+		return articlenum;
+	}
+
+	public void setArticlenum(Integer articlenum) {
+		this.articlenum = articlenum;
 	}
 	
 }

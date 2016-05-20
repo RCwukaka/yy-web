@@ -154,10 +154,7 @@ public class UserControl extends BaseControl {
 	@RequestMapping("index/{token}")
 	public ModelAndView index(@PathVariable(value="token")String token) {
 		ModelAndView mv = new ModelAndView();
-		if(token==null){
-			mv.setViewName("/custom/index");
-			return mv;
-		}
+		mv.addObject("ctx",CommonConstant.CSDN_MIRRO_LOCATION+"/news/index?v="+new Date().getTime());
 		SessionEntity sessionEntity = sessionService.findByToken(token);
 		if(sessionEntity==null){
 			mv.setViewName("/custom/index");
@@ -169,5 +166,4 @@ public class UserControl extends BaseControl {
 		mv.setViewName("/custom/index");
 		return mv;
 	}
-	
 }
