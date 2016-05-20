@@ -17,24 +17,21 @@
 			var newsContent = $("#newsContent").val();
 			var title = $("#title").val();
 			var briefContent = $("#briefContent").val();
-			var companyId = 1;
 			var data = {
 				"title" : title,
 				"briefContent" : briefContent,
 				"content" : newsContent,
-				"company_id" : companyId,
 				"author" : "2",
 				"classification" : "1"
 			};
 			$.ajax({
 				type : "post",
-				url : "/system-web/news/newsCreate",
+				url : "${pageContext.request.contextPath}/news/save/${token}",
 				data : jsON.stringify(data),
-				contentType : "application/json;charset=utf-8",
 				dataType : "json",
 				success : function(message) {
-					if (message.dataMap.status == 200) {
-						alert("asda");
+					if (message.code == 0) {
+						alert(message.result);
 					}
 				}
 			});
@@ -51,7 +48,6 @@
 				文章规范
 			</div>
 			<div class="col-md-8">
-				<input type="text" class="form-control" placeholder="文章归属公司(待完善)" required="required"><br>
 				<input type="text" class="form-control" placeholder="新闻标题20字以内"><br>
 				<textarea class="form-control" rows="3" placeholder="100字文章概要"></textarea>
 				<div class="form-group">

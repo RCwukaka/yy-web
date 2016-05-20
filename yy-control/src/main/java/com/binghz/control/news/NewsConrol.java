@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.binghz.service.news.NewsService;
 import com.binghz.service.user.UserService;
@@ -35,6 +37,7 @@ public class NewsConrol {
 	@Autowired
 	private UserService userService;
 
+	@ResponseBody
 	@RequestMapping("save/{token}")
 	public JsonMessage saveNews(@PathVariable(value = "token") String token,
 			String title, String content, String briefContent) {
@@ -72,11 +75,33 @@ public class NewsConrol {
 				HttpState.HTTP_CHANNEL_SUCCESS_STR);
 	}
 	
+	@ResponseBody
 	@RequestMapping("newsBrief")
 	public JsonMessage newsBrief(Integer page){
 		JsonMessage result = new JsonMessage();
 		List<Map<String,Object>> newsList = newsService.findNewsByStatus(1);
 		result.fill(0, "", null,newsList);
 		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("newsCreateView/{token}")
+	public ModelAndView newsCreateView(@PathVariable(value="token")String token){
+		ModelAndView mv = new ModelAndView();
+		System.out.println(token);
+		System.out.println(token==null);
+		if(token==null){
+			System.out.println("//////");
+			mv.setViewName("/custom/login");
+			return mv;
+		}
+		if(!sessionService.isLogin(token)||!sessionService.isAlive(token)){
+			mv.setViewName("/custom/login");
+			return mv;
+		}
+		mv.setViewName("/custom/newsCreate");
+		mv.addObject("token",token);
+		return mv;
+		
 	}
 }

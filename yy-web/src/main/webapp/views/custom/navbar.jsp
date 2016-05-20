@@ -18,7 +18,7 @@
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav" id="header">
 				<li><a href="${pageContext.request.contextPath}/index/${token}">资讯<span class="sr-only">(current)</span></a></li>
-				<li><a href="${pageContext.request.contextPath}/news/${token}">投稿</a></li>
+				<li><a href="${pageContext.request.contextPath}/news/newsCreateView/${token}">投稿</a></li>
 				<li class="dropdown"><a href="${pageContext.request.contextPath}/news" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">融资<span class="caret"></span></a>

@@ -152,7 +152,7 @@ public class UserControl extends BaseControl {
 
 	@ResponseBody
 	@RequestMapping("index/{token}")
-	public ModelAndView index(HttpServletRequest request,@PathVariable(value="token")String token) {
+	public ModelAndView index(@PathVariable(value="token")String token) {
 		ModelAndView mv = new ModelAndView();
 		if(token==null){
 			mv.setViewName("/custom/index");
