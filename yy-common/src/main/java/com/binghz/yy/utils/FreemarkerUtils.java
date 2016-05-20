@@ -3,6 +3,7 @@ package com.binghz.yy.utils;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.List;
@@ -15,11 +16,16 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 public class FreemarkerUtils {
-	public static void createHTML(ServletContext context,
+	public static File createHTML(ServletContext context,
 			Map<String, Object> data, String templatePath, String targetHtmlPath){
 		String htmlPath = context.getRealPath("/html") + "/"
 				+ targetHtmlPath;
 		File htmlFile = new File(htmlPath);
+		try {
+			htmlFile.createNewFile();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		Configuration freemarkerCfg = new Configuration();
 		// 加载模版
 		freemarkerCfg.setServletContextForTemplateLoading(context, "/templates");
@@ -39,13 +45,19 @@ public class FreemarkerUtils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		return htmlFile;
 	}
-	public static void createHTMLIndex(ServletContext context,
-			List<Map<String,Object>> data, String templatePath, String targetHtmlPath){
+	
+	public static File createHTMLIndex(ServletContext context,
+			Map<String,Object> data, String templatePath, String targetHtmlPath){
 		String htmlPath = context.getRealPath("/html") + "/"
 				+ targetHtmlPath;
 		File htmlFile = new File(htmlPath);
+		try {
+			htmlFile.createNewFile();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		Configuration freemarkerCfg = new Configuration();
 		// 加载模版
 		freemarkerCfg.setServletContextForTemplateLoading(context, "/templates");
@@ -65,7 +77,7 @@ public class FreemarkerUtils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		return htmlFile;
 	}
 	/*
 	 * 生成index页面左部导航框
@@ -82,14 +94,14 @@ public class FreemarkerUtils {
 	/*
 	 * 生成index页面的新闻列表html文件
 	 */
-	public static void createIndexNewsContent(ServletContext context,List<Map<String,Object>> data){
-		createHTMLIndex(context,data,"/index/index_news_content.ftl","/index/index_news_content.html");
+	public static File createIndexNewsContent(ServletContext context,Map<String,Object> data){
+		return createHTMLIndex(context,data,"/index/index_news_content.ftl","/index/index_news_content.html");
 	}
 	/*
 	 * 生成新闻html
 	 */
-	public static void createNewsHtml(ServletContext context,Map<String,Object> data){
-		createHTML(context,data,"/news/news.ftl","/news/news.html");
+	public static File createNewsHtml(ServletContext context,Map<String,Object> data,String pathName){
+		return createHTML(context,data,"/news/news.ftl","/news/"+pathName+".html");
 	}
 
 }

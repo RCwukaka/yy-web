@@ -1,15 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" 
+           uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript" src="/system-web/js/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="/system-web/js/wangEditor-1.3.12.min.js"></script>
-<link rel="stylesheet" href="/system-web/css/wangEditor-1.3.12.css"
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/wangEditor-1.3.12.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/wangEditor-1.3.12.css"
 	type="text/css">
-<link rel="stylesheet" href="/system-web/css/bootstrap.min.css">
-<link rel="stylesheet" href="/system-web/css/basepage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/basepage.css">
 <title>新闻操作</title>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -20,14 +22,12 @@
 			var data = {
 				"title" : title,
 				"briefContent" : briefContent,
-				"content" : newsContent,
-				"author" : "2",
-				"classification" : "1"
+				"content" : newsContent
 			};
 			$.ajax({
 				type : "post",
 				url : "${pageContext.request.contextPath}/news/save/${token}",
-				data : jsON.stringify(data),
+				data : data,
 				dataType : "json",
 				success : function(message) {
 					if (message.code == 0) {
@@ -48,8 +48,8 @@
 				文章规范
 			</div>
 			<div class="col-md-8">
-				<input type="text" class="form-control" placeholder="新闻标题20字以内"><br>
-				<textarea class="form-control" rows="3" placeholder="100字文章概要"></textarea>
+				<input type="text" class="form-control" id="title" placeholder="新闻标题20字以内"><br>
+				<textarea class="form-control" rows="3" id="briefContent" placeholder="100字文章概要"></textarea>
 				<div class="form-group">
 					<label for="exampleInputFile">新闻图片</label> <input type="file"
 						id="exampleInputFile">
@@ -62,7 +62,7 @@
 			</div>
 		</div>
 	</div>
-	<jsp:include page="/html/common/foot.html"></jsp:include>
+	<c:import url="/html/common/foot.html" charEncoding="UTF-8"></c:import>
 	<script type="text/javascript">
 		$(function() {
 			$('#newsContent')
@@ -79,6 +79,6 @@
 							});
 		});
 	</script>
-	<script src="/system-web/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </body>
 </html>

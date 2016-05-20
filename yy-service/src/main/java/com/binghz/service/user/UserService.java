@@ -42,4 +42,7 @@ public class UserService {
 		return this.findByUserName(username) == null ? false : true;
 	}
 
+	public UserEntity findOne(Long id){
+		return userDao.findOne(id);
+	}
 }

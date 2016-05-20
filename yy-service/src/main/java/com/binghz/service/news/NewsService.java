@@ -35,8 +35,15 @@ public class NewsService {
 	 * 返回对应状态的新闻
 	 */
 	public List<Map<String,Object>> findNewsByStatus(Integer status){
-		String sql = "select from news where status="+status;
+		String sql = "select * from news where status="+status;
 		List<Map<String,Object>> map = queryDao.queryMap(sql);
 		return map;
+	}
+	/*
+	 * 更新新闻信息
+	 */
+	public void update(NewsEntity news){
+		String sql="update news set newsurl='"+news.getNewsUrl()+"' where id='"+news.getId()+"'";
+		queryDao.update(sql);
 	}
 }
