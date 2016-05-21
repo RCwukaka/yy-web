@@ -19,14 +19,7 @@
 			<ul class="nav navbar-nav" id="header">
 				<li><a href="${pageContext.request.contextPath}/index/${token}">资讯<span class="sr-only">(current)</span></a></li>
 				<li><a href="${pageContext.request.contextPath}/news/newsCreateView/${token}">投稿</a></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">招聘<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li class="hidden-sm hidden-md"><a href="${pageContext.request.contextPath}/job/${token}">寻求职位</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="#">发布职位</a></li>
-					</ul></li>
+				<li><a href="${pageContext.request.contextPath}/job/index/${token}">招聘</a></li>
 			</ul>
 			<c:choose>
 				<c:when test="${isLogin == null}">
@@ -60,13 +53,7 @@
 						aria-expanded="false"><img src=${imgSrc} 
 							class="img-circle" width="34x" height="34px" id="userOnlineImg"></a>
 						<ul class="dropdown-menu">
-							<li class="hidden-sm hidden-md"><a href='${pageContext.request.contextPath}/account/base/${token}' data-click="info">基本信息</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href='${pageContext.request.contextPath}/account/resume/${token}' data-click="resume" class="req">我的简历</a></li>
-							<li role="separator" class="divider" ></li>
-							<li><a href='${pageContext.request.contextPath}/account/article/${token}' data-click="article" class="req">我的文章</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href='${pageContext.request.contextPath}/account/company/${token}' data-click="company" class="req">关注的公司</a></li>
+							<li class="hidden-sm hidden-md"><a href='${pageContext.request.contextPath}/account/info/${token}' data-click="info">个人设置</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a data-click="loginout" id="req">退出</a></li>
 						</ul></li>

@@ -57,21 +57,18 @@ public class NewsConrol extends BaseControl {
 			return result.fill(HttpState.HTTP_PARAME_NORMAL,
 					HttpState.HTTP_PARAME_NORMAL_STR); // 参数错误
 		}
-		String contentUTF = URLEncoder.encode(content, "UTF-8");
-		String briefContentUTF = URLEncoder.encode(briefContent, "UTF-8");
-		String titleUTF = URLEncoder.encode(title, "UTF-8");
 		SessionEntity sessionEntity = sessionService.findByToken(token);
 		UserEntity userEntity = userService.findByUserName(sessionEntity
 				.getUsername());
 		NewsEntity newsEntity = new NewsEntity();
 		newsEntity.setAuthorid(userEntity.getId());
-		newsEntity.setBriefContent(briefContentUTF);
+		newsEntity.setBriefContent(briefContent);
 		newsEntity.setClassification(1);
 		newsEntity.setCreateDate(new Date());
 		newsEntity.setStatus(1); // /状态暂定为1
-		newsEntity.setContent(contentUTF);
+		newsEntity.setContent(content);
 		newsEntity.setUpdateDate(new Date());
-		newsEntity.setTitle(titleUTF);
+		newsEntity.setTitle(title);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("content", content);
 		ServletContext servletContext = request.getSession()
@@ -142,7 +139,7 @@ public class NewsConrol extends BaseControl {
 		mv.addObject("nickname", userEntity.getNickname());
 		mv.addObject("articlenum", userEntity.getArticlenum());
 		mv.addObject("introduce", userEntity.getIntroduce());
-		if (token == null) {
+		if (token == "") {
 			return mv;
 		}
 		SessionEntity sessionEntity = sessionService.findByToken(token);

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib uri="/struts-tags" prefix="s"%>
-<div class="tab-pane fade in active" id="article">
+<div class="tab-pane fade in active">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="jumbotron">

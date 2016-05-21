@@ -5,30 +5,35 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.binghz.yy.entity.IdEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
 @Table(name = "company")
+@JsonIgnoreProperties({"password"})
 public class CompanyEntity extends IdEntity {
 
-	@Column(name = "companyname",nullable=false)
+	@Column(name = "companyname")
 	private String companyName;
 
 	// 公司地址
-	@Column(name = "companylocation",nullable=false)
+	@Column(name = "companylocation")
 	private String companyLocation;
 
 	// 公司员工数量
-	@Column(name = "companyemployernumber",nullable=false)
+	@Column(name = "companyemployernumber")
 	private Long companyEmployerNumber;
 
 	// 公司融资阶段
-	@Column(name = "stage",nullable=false)
+	@Column(name = "stage")
 	private String stage;
 
 	// 公司介绍
-	@Column(name = "companyintroduce",nullable=false)
+	@Column(name = "companyintroduce")
 	private String companyIntroduce;
+	
+	@Column(name = "passsword")
+	private String password;
 
 	public String getCompanyName() {
 		return companyName;
@@ -68,6 +73,14 @@ public class CompanyEntity extends IdEntity {
 
 	public void setCompanyIntroduce(String companyIntroduce) {
 		this.companyIntroduce = companyIntroduce;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

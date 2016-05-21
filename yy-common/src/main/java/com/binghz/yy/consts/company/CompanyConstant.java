@@ -16,4 +16,8 @@ public class CompanyConstant {
 	
 	//公司未融资
 	public static int COMPANY_NO_CORPORATE_FINANCE = 0;
+	
+	//公司帐号重复
+	public static int COMPANY_NAME_REPEAT = -1;
+	public static String COMPANY_NAME_REPEAT_STR ="帐号已注册";
 }	

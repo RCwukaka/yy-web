@@ -23,6 +23,12 @@ public class JobInfoEntity extends IdEntity{
 	@Column(name="jobposition",nullable=false)
 	private String jobPosition;
 	
+	@Column(name="companyId")
+	private Long companyId;
+	
+	@Column(name="salary")
+	private Long salary;
+	
 	public String getJobName() {
 		return jobName;
 	}
@@ -41,5 +47,17 @@ public class JobInfoEntity extends IdEntity{
 	public void setJobPosition(String jobPosition) {
 		this.jobPosition = jobPosition;
 	}
-
+	public Long getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
+	public Long getSalary() {
+		return salary;
+	}
+	public void setSalary(Long salary) {
+		this.salary = salary;
+	}
+	
 }

@@ -56,6 +56,9 @@ public class UserControl extends BaseControl {
 					HttpState.HTTP_PARAME_NORMAL_STR); // 参数错误
 		}
 		UserEntity user = userService.findByUserName(username);
+		if(user==null){
+			return result.fill(HttpState.HTTP_USERNAMEPASSWD_ERROR,HttpState.HTTP_USERNAMEPASSWD_ERROR_STR);
+		}
 		if (StringUtils.equals(user.getPassword(),
 				EncodeUtils.base64Md5(password))) {
 			SessionEntity sessionEntity = sessionService.addSession(request, user);

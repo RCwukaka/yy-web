@@ -10,7 +10,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">管理员</a>
+			<a class="navbar-brand">冰胡子资讯</a>
 		</div>
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"
@@ -20,13 +20,11 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">网站首页</a>
 		</div>
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right hidden-sm">
-				<li><a href="/system-web/login">修改密码</a></li>
-				<li><a href="/system-web/login">退出</a></li>
+				<li><a href="/yy-web/index">退出</a></li>
 			</ul>
 		</div>
 	</div>

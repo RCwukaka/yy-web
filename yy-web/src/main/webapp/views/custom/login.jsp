@@ -83,12 +83,6 @@ body {
 					<input type="text" id="username" class="form-control"
 						placeholder="username" autofocus> <input type="password"
 						id="password" class="form-control" placeholder="password">
-					<div class="checkbox">
-						<a href="#" style="color: #fff; float: left">忘记密码</a> <label
-							style="color: #fff; float: right"> <input type="checkbox"
-							id="rememberPas"> 记住密码
-						</label>
-					</div>
 					<button type="button" class=" btn btn-primary"
 						style="margin-right: 8%; width: 45%;" id="btnRegister">注册</button>
 					<button type="button" id="btnLogin" class=" btn btn-primary" style="width: 45%;"
@@ -96,6 +90,7 @@ body {
 				</div>
 		</div>
 	</div>
+	
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </body>
 </html>

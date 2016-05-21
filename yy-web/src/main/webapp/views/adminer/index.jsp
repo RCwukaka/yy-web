@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="/system-web/css/bootstrap.min.css">
-<script src="/system-web/js/jquery-2.1.4.min.js"></script>
-<script src="/system-web/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <title>管理员首页</title>
 <style type="text/css">
 .content {
