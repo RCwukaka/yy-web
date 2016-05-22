@@ -60,18 +60,23 @@
 	<div class="content">
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<div id="showTab">
 				<ul class="nav nav-tabs">
 						<li class="active"><a class="userinfo" href="${pageContext.request.contextPath}/account/base/${token}"  target="iframepage" id="base">基本信息</a></li>
+						<script>
+							$(function(){
+								document.getElementById("base").click();
+							})
+						</script>
   						<li><a class="userinfo" href="${pageContext.request.contextPath}/account/resume/${token}"  target="iframepage" id="resume">我的简历</a></li>
 						<li><a class="userinfo" href="${pageContext.request.contextPath}/account/article/${token}"  target="iframepage" id="article">我的文章</a></li>
 				</ul>
-					<div class="tab-content">
-						<iframe name="iframepage" id="iframepage" frameborder="0"
-							scrolling="no" marginheight="0" marginwidth="0"
-							onLoad="iFrameHeight()" width="100%"></iframe>
+					<div class="ee" style="padding-right:30px">
+						<div>
+							<iframe name="iframepage" id="iframepage" frameborder="0"
+								scrolling="no" marginheight="0" marginwidth="0"
+								onLoad="iFrameHeight()" width="100%"></iframe>
+						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 	</div>

@@ -128,6 +128,7 @@ public class QueryDao {
 		try {
 			resultList = query.getResultList();
 		} catch (Exception e) {
+			System.out.println(e);
 		} finally {
 			em.close();
 		}

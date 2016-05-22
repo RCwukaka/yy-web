@@ -1,5 +1,8 @@
 package com.binghz.control.user;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.binghz.control.common.BaseControl;
+import com.binghz.service.news.NewsService;
 import com.binghz.service.user.UserService;
 import com.binghz.yy.entity.common.user.UserEntity;
 import com.binghz.yy.session.entity.SessionEntity;
@@ -21,6 +25,8 @@ public class UserAccountControl extends BaseControl{
 	private SessionService sessionService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private NewsService newsService;
 	
 	@ResponseBody
 	@RequestMapping("info/{token}")
@@ -69,6 +75,10 @@ public class UserAccountControl extends BaseControl{
 	@RequestMapping("article/{token}")
 	public ModelAndView article(@PathVariable(value="token")String token) {
 		ModelAndView mv =new ModelAndView();
+		SessionEntity sessionEntity = sessionService.findByToken(token);
+		UserEntity userEntity = userService.findByUserName(sessionEntity.getUsername());
+		List<Map<String,Object>> lists = newsService.findNewsByAuthor(userEntity.getId());
+		mv.addObject("lists",lists);
 		mv.addObject("token",token);
 		mv.setViewName("/custom/account/article");
 		return mv;

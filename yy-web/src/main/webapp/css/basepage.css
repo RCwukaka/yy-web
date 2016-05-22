@@ -104,3 +104,32 @@ li.success a{
 .tab-pane{
 	margin-top:10px;
 }
+.bho {
+	width: 100px;
+	position: absolute;
+	height: 100px;
+	background: #000;
+	filter: alpha(opacity : 50);
+	opacity: 0.5;
+	-moz-opacity: 0.5;
+	overflow: hidden;
+	left: 50%;
+	margin-left: -50px;
+	transition: opacity 0.2s ease-in-out;
+	-moz-transition: -moz-opacity 0.2s ease-in-out;
+	-webkit-transition: opacity 0.2s ease-in-out;
+	-o-transition: opacity 0.2s ease-in-out;
+	text-align: center;
+	line-height: 100px;
+	color: #FFF;
+	vertical-align: middle;
+}
+
+.bho:hover {
+	filter: alpha(opacity : 10);
+	opacity: 0.1;
+	background: #000;
+	font-color: #000;
+	-moz-opacity: 0.1;
+	cursor: pointer;
+}

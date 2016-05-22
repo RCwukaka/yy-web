@@ -42,10 +42,10 @@
 	cursor: pointer;
 }
 </style>
+<div class="tab-pane ">
 <div style="display: none">
 	<input name="img" type="file" id="img" />
 </div>
-<div class="tab-pane">
 <div class="row">
 	<div class="col-md-4">
 		<div style="margin: 0 auto; text-align: center">

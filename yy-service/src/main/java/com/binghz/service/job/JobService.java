@@ -1,6 +1,7 @@
 package com.binghz.service.job;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,5 +50,10 @@ public class JobService {
 	public void delete(Long jobId){
 		String sql = "delete from jobinfo where id="+jobId;
 		queryDao.update(sql);
+	}
+	
+	public List<Map<String,Object>> find(String job){
+		String sql = "select jobinfo.create_date jobdate,jobinfo.salary,jobinfo.jobname,jobinfo.jobposition,jobinfo.jobrequire,jobinfo.id as jobId,company.companyintroduce ,company.companylocation,company.companyname,company.stage from master.jobinfo jobinfo left join master.company company on jobinfo.company_id=company.id where jobinfo.vaild=1 and jobinfo.jobname like '%"+job+"%'";
+		return queryDao.queryMap(sql);
 	}
 }

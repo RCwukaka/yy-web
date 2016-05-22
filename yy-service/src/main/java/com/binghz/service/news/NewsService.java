@@ -46,4 +46,12 @@ public class NewsService {
 		String sql="update news set newsurl='"+news.getNewsUrl()+"' where id='"+news.getId()+"'";
 		queryDao.update(sql);
 	}
+	/*
+	 * 根据userId得到新闻
+	 */
+	public List<Map<String,Object>> findNewsByAuthor(Long authorId){
+		String sql = "select * from news where authorid="+authorId;
+		List<Map<String,Object>> map = queryDao.queryMap(sql);
+		return map;
+	}
 }
