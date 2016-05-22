@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,11 +42,14 @@ public class ResumeControl {
 	@RequestMapping("save/{token}")
 	public JsonMessage saveResume(@PathVariable(value = "token") String token,
 			String phone, String introduce, String skills, String expectSalary,
-			String position) {
+			String id, String position,
+			@RequestParam(value = "file", required = false) MultipartFile file) {
 		JsonMessage result = new JsonMessage();
 		SessionEntity sessionEntity = sessionService.findByToken(token);
-		UserEntity userEntity =  userService.findByUserName(sessionEntity.getUsername());
-		ResumeEntity resumeEntity = new ResumeEntity();
+		UserEntity userEntity = userService.findByUserName(sessionEntity
+				.getUsername());
+		ResumeEntity resumeEntity = resumeService.findOne(NumberUtils
+				.toLong(id));
 		resumeEntity.setCreateDate(new Date());
 		resumeEntity.setExpectSalary(expectSalary);
 		resumeEntity.setIntroduce(introduce);
@@ -58,37 +62,46 @@ public class ResumeControl {
 				HttpState.HTTP_CHANNEL_SUCCESS_STR);
 		return result;
 	}
-	
+
 	@ResponseBody
-	@RequestMapping("upload/{token}")
-	public JsonMessage upload(HttpServletRequest request,@PathVariable(value = "token") String token,@RequestParam(value = "file", required = false) MultipartFile file){
+	@RequestMapping("upload/{id}/{token}")
+	public JsonMessage upload(HttpServletRequest request,
+			@RequestParam(value = "file", required = false) MultipartFile file,
+			@PathVariable(value = "id") String id,
+			@PathVariable(value = "token") String token) {
 		JsonMessage result = new JsonMessage();
 		ServletContext servletContext = request.getSession()
 				.getServletContext();
 		SessionEntity sessionEntity = sessionService.findByToken(token);
-		UserEntity userEntity =  userService.findByUserName(sessionEntity.getUsername());
-		String path = servletContext.getContextPath()+CommonConstant.RESUME_SAVE_PATH;
-		String fileName = file.getOriginalFilename();  
-		File targetFile = new File(path, fileName);  
-        if(!targetFile.exists()){  
-            targetFile.mkdirs();  
-        }  
-        try {  
-            file.transferTo(targetFile);  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        }
-        try {
-			CSDNUtils.getFtpQiNiu().upFile(targetFile, userEntity.getUserName());
+		UserEntity userEntity = userService.findByUserName(sessionEntity
+				.getUsername());
+		String path = servletContext.getContextPath()
+				+ CommonConstant.RESUME_SAVE_PATH;
+		String fileName = file.getOriginalFilename();
+		File targetFile = new File(path, fileName);
+		if (!targetFile.exists()) {
+			targetFile.mkdirs();
+		}
+		try {
+			file.transferTo(targetFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			CSDNUtils.getFtpQiNiu().upFile(targetFile,
+					"/" + userEntity.getUserName());
 		} catch (QiniuException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        ResumeEntity resumeEntity = resumeService.findByUserId(userEntity.getId());
-        resumeService.update(resumeEntity.getId(), CommonConstant.CSDN_MIRRO_LOCATION+userEntity.getUserName());
-        result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
+		ResumeEntity resumeEntity = resumeService.findOne(NumberUtils
+				.toLong(id));
+		resumeEntity.setResumeUrl(CommonConstant.CSDN_MIRRO_LOCATION + "/"
+				+ userEntity.getUserName());
+		resumeService.save(resumeEntity);
+		result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
 				HttpState.HTTP_CHANNEL_SUCCESS_STR);
 		return result;
 	}
-	
+
 }

@@ -67,7 +67,8 @@
 								document.getElementById("base").click();
 							})
 						</script>
-  						<li><a class="userinfo" href="${pageContext.request.contextPath}/account/resume/${token}"  target="iframepage" id="resume">我的简历</a></li>
+						<li><a class="userinfo" href="${pageContext.request.contextPath}/account/resume/${token}"  target="iframepage" id="resume">我的简历</a></li>
+  						<li><a class="userinfo" href="${pageContext.request.contextPath}/account/deliverHistory/${token}"  target="iframepage" id="resume">投递记录</a></li>
 						<li><a class="userinfo" href="${pageContext.request.contextPath}/account/article/${token}"  target="iframepage" id="article">我的文章</a></li>
 				</ul>
 					<div class="ee" style="padding-right:30px">

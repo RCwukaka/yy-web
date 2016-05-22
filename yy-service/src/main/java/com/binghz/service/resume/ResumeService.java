@@ -26,4 +26,8 @@ public class ResumeService {
 		String sql = "update resume set resumeurl="+url+" where id="+resumeId;
 		queryDao.update(sql);
 	}
+	
+	public ResumeEntity findOne(Long resumeId){
+		return resumeDao.findOne(resumeId);
+	}
 }

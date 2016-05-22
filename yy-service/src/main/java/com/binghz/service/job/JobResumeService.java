@@ -26,4 +26,13 @@ public class JobResumeService {
 	public List<JobResumeEntity> findByResumeId(Long resumeId) {
 		return jobResumeDao.findByResumeId(resumeId);
 	}
+	
+	public void save(JobResumeEntity jobResumeEntity){
+		jobResumeDao.save(jobResumeEntity);
+	}
+	
+	public List<Map<String, Object>> deliverHistory(Long userId){
+		String sql = "select job_resume.state,job_resume.create_date,jobinfo.jobname,company.companyname from jobinfo left join company on jobinfo.company_id=company.id left join job_resume on job_resume.jobid=jobinfo.id where jobinfo.id in (select job_resume.jobid from job_resume where job_resume.resumeid in (select id from resume where id="+userId+")) ";
+		return queryDao.queryMap(sql);
+	}
 }
