@@ -83,6 +83,9 @@ body {
 					<input type="text" id="username" class="form-control"
 						placeholder="username" autofocus> <input type="password"
 						id="password" class="form-control" placeholder="password">
+					<div  style="width:100%;display:inline-block">
+						<a href="${pageContext.request.contextPath}/company/loginView" style="color: #fff; float:right">企业登陆</a> 
+					</div>
 					<button type="button" class=" btn btn-primary"
 						style="margin-right: 8%; width: 45%;" id="btnRegister">注册</button>
 					<button type="button" id="btnLogin" class=" btn btn-primary" style="width: 45%;"

@@ -1,6 +1,7 @@
 package com.binghz.control.job;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import com.binghz.yy.session.service.SessionService;
 import com.binghz.yy.utils.JsonMessage;
 
 @Controller
-@RequestMapping("job")
+@RequestMapping("jobresume")
 public class JobResumeControl extends BaseControl {
 
 	@Autowired
@@ -39,7 +40,12 @@ public class JobResumeControl extends BaseControl {
 		jobResumeEntity.setCreateDate(new Date());
 		jobResumeEntity.setJobId(NumberUtils.toLong(jobId));
 		jobResumeEntity.setUpdateDate(new Date());
+		jobResumeEntity.setState(0);
 		jobResumeEntity.setResumeId(NumberUtils.toLong(resumeId));
+		List<JobResumeEntity> list = jobResumeService.findByResumeIdAndJobId(NumberUtils.toLong(resumeId), NumberUtils.toLong(jobId));
+		if(list.size()!=0){
+			return result.fill(-1,"已经投递过");
+		}
 		jobResumeService.save(jobResumeEntity);
 		result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
 				HttpState.HTTP_CHANNEL_SUCCESS_STR);
@@ -50,7 +56,19 @@ public class JobResumeControl extends BaseControl {
 	@RequestMapping("findByJobId")
 	public JsonMessage findByJobId(String jobId,String resumeId){
 		JsonMessage result = new JsonMessage();
-		
+		result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
+				HttpState.HTTP_CHANNEL_SUCCESS_STR);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("updateState")
+	public JsonMessage updateState(String jobId,String resumeId,String state){
+		JsonMessage result = new JsonMessage();
+		 List<JobResumeEntity> list = jobResumeService.findByResumeIdAndJobId(NumberUtils.toLong(resumeId), NumberUtils.toLong(jobId));
+		 JobResumeEntity jobResumeEntity = list.get(0);
+		 jobResumeEntity.setState(NumberUtils.toInt(state));
+		 jobResumeService.save(jobResumeEntity);
 		result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
 				HttpState.HTTP_CHANNEL_SUCCESS_STR);
 		return result;

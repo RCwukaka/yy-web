@@ -111,4 +111,8 @@ public class SessionService {
 	public SessionEntity findByToken(String token){
 		return sessionDao.findByToken(token);
 	}
+	
+	public void save(SessionEntity sessionEntity){
+		sessionDao.save(sessionEntity);
+	}
 }

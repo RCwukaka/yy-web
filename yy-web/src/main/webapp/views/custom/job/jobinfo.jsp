@@ -12,6 +12,30 @@
 <script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <title>工作信息</title>
+<script type="text/javascript">
+$(function(){
+	$(".sendJob").click(function(){
+		var jobid = $(this).attr("jobid");
+		var resumeid= ${resumeId};
+		if(resumeid==""){
+			alert("请先登录");
+		}else{
+			$.ajax({
+				type : "post",
+				url : "${pageContext.request.contextPath}/jobresume/save/${token}",
+				data : {
+					"jobId" : jobid,
+					"resumeId" : resumeid
+				},
+				dataType : "json",
+				success : function(message) {
+						alert(message.result);
+					}
+			});
+		}
+	})
+})
+</script>
 </head>
 <body>
 <c:forEach var="list" items ="${lists}">
@@ -23,10 +47,10 @@
 			</div>
 			<div class="media-right">
 				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target=".bs-example-modal-lg">查看</button>
+					data-target=".bs-example-modal-lg${list.id}">查看</button>
 			</div>
 		</div>
-		<div class="modal fade bs-example-modal-lg" tabindex="-1"
+		<div class="modal fade bs-example-modal-lg${list.id}" tabindex="-1"
 			role="dialog" aria-labelledby="myLargeModalLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -48,7 +72,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary">投递</button>
+						<button type="button" class="btn btn-primary sendJob" jobid="${list.id}">投递</button>
 					</div>
 				</div>
 			</div>

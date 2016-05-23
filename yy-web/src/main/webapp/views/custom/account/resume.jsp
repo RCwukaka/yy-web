@@ -12,7 +12,22 @@
 	src="${pageContext.request.contextPath}/js/ajaxfileupload.js"></script>
 <script type="text/javascript">
 $(function(){
+	$("#resumeFile").click(function(){
+		$.ajaxFileUpload({  
+	        url:'${pageContext.request.contextPath}/resume/upload/${id}/${token}',  
+	        secureuri:false,  
+	        fileElementId:'resume',//file标签的id  
+	        dataType: 'json',//返回数据的类型  
+	        success: function (data, status) {  
+	            alert("success");
+	        },  
+	        error: function (data, status, e) {  
+	            alert(e);  
+	        }  
+	    });  
+	});
 	$("#saveResume").click(function(){
+		$(this).button('loading');
 		var phone=$("#phone").val();
 		var introduce=$("#introduce").val();
 		var skills=$("#skills").val();
@@ -27,19 +42,15 @@ $(function(){
 			"position":position,
 			"id":id
 		};
-		$.ajaxFileUpload({  
-	        url:'${pageContext.request.contextPath}/resume/save/${token}',  
-	        secureuri:false,  
-	        fileElementId:'resume',//file标签的id  
-	        dataType: 'json',//返回数据的类型  
-	        data:data,//一同上传的数据  
-	        success: function (data, status) {  
-	            alert("success");
-	        },  
-	        error: function (data, status, e) {  
-	            alert(e);  
-	        }  
-	    });  
+		$.ajax({
+			type : "post",
+			url : "${pageContext.request.contextPath}/resume/save/${token}",
+			data : data,
+			dataType : "json",
+			success : function(message) {
+				$('#saveResume').button('reset');
+			}
+		});
 	})
 })
 </script>
@@ -57,7 +68,7 @@ $(function(){
 			<div class="form-group">
 				<label class="col-sm-2 control-label" for="expectSalary">期望薪资</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="email" placeholder=""
+					<input type="text" class="form-control" id="expectSalary" placeholder=""
 						value="${expectSalary}">
 				</div>
 			</div>
@@ -86,13 +97,9 @@ $(function(){
 				<label class="col-sm-2 control-label"></label>
 				<c:choose>
 					<c:when test="${resumeurl==''}">
-						<div class="col-sm-8">
-							<input name="resume" type="file" id="resume" />
-						</div>
-						<div class="col-sm-4">
-							<button type="button" class="btn btn-info" id="saveResume"
+							<input name="resume" type="file" id="resume" style="display:inline"/>
+							<button type="button" class="btn btn-info btn-sm" id="resumeFile"
 							autocomplete="off" data-loading-text="Saving...">上传简历</button>
-							</div>
 					</c:when>
 					<c:otherwise>
 						<div class="col-sm-8">
@@ -104,7 +111,7 @@ $(function(){
 			<div class="form-group">
 				<div class="col-sm-4 col-md-offset-2 ">
 					<button type="button" class="btn btn-info" id="saveResume"
-							autocomplete="off" data-loading-text="Saving...">上传简历</button>
+							autocomplete="off" data-loading-text="Saving...">保存</button>
 				</div>
 			</div>
 		</form>

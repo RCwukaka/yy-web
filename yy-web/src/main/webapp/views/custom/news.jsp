@@ -32,9 +32,30 @@
 					<p style='display: inline-block; margin-left: 20px;'>更新时间:${date}</p>
 				</div>
 				<c:import url="${ctx}" charEncoding="UTF-8"></c:import>
+				<div id="scontent">
+				<c:forEach var="comment" items="${lists}">
+					<div class="media">
+						<div class="media-body">
+						    <h4 class="media-heading">${comment.nickname}</h4>
+						    ${comment.create_date}
+						    <div class="media">
+						     评论到:${comment.commentcontent}
+						    </div>
+						  </div>
+					</div>
+				</c:forEach>
+				</div>
 				<textarea id='commentContent' style='height: 200px; width: 100%;'></textarea>
-				<button class="btn btn-warning" style="margin-top: 10px" id="send">发表评论</button>
+				<c:choose>
+					<c:when test="${isLogin==null}">
+		          		<button class="btn btn-warning" style="margin-top: 10px" disabled="disabled">请登录</button>
+		          </c:when>
+		          <c:when test="${isLogin==true}">
+		          		<button class="btn btn-warning" style="margin-top: 10px" id="send">发表评论</button>
+		          </c:when>
+				</c:choose>
 			</div>
+			<div style="display:none" id="userId">${userId}</div>
 			<div class="col-md-3">
 				<div id="article_side">
 					<div class="row">
@@ -57,7 +78,7 @@
 	<c:import url="/html/common/foot.html" charEncoding="UTF-8"></c:import>
 	<script type="text/javascript">
 		$(function() {
-			$('#commentContent')
+			 var editor = $('#commentContent')
 					.wangEditor(
 							{
 								'menuConfig' : [
@@ -67,6 +88,28 @@
 										[ 'createLink', 'unLink', 'insertTable' ],
 										[ 'undo', 'redo' ] ]
 							});
+			var newsId = ${id};
+			var userId= $("#userId").text();
+			$("#send").click(function(){
+			var commentContent = editor.html();
+				 $.ajax({
+					type : "post",
+					url : "${pageContext.request.contextPath}/comment/publish",
+					data : {
+						"newsId":newsId,
+						"userId":userId,
+						"commentContent":commentContent
+					},
+					dataType : "json",
+					success : function(message) {
+						if(message.code!=0){
+							alert(message.result);
+						}else{
+							$("#scontent").prepend('<div class="media"><div class="media-body"><h4 class="media-heading">'+message.map.nickname+'</h4>${comment.create_date}<div class="media">评论到:'+message.map.commentcontent+'</div></div></div>');
+						}
+					}
+				});
+			})
 		});
 	</script>
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>

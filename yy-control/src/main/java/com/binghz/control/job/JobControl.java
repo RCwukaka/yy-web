@@ -15,9 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.binghz.control.common.BaseControl;
 import com.binghz.service.job.JobService;
+import com.binghz.service.resume.ResumeService;
 import com.binghz.service.user.UserService;
 import com.binghz.yy.consts.common.HttpState;
 import com.binghz.yy.entity.common.job.JobInfoEntity;
+import com.binghz.yy.entity.common.resume.ResumeEntity;
 import com.binghz.yy.entity.common.user.UserEntity;
 import com.binghz.yy.session.entity.SessionEntity;
 import com.binghz.yy.session.service.SessionService;
@@ -33,6 +35,8 @@ public class JobControl extends BaseControl {
 	private UserService userService;
 	@Autowired
 	private SessionService sessionService;
+	@Autowired
+	private ResumeService resumeService;
 
 	@ResponseBody
 	@RequestMapping("save/{companyId}")
@@ -133,10 +137,6 @@ public class JobControl extends BaseControl {
 		SessionEntity sessionEntity = sessionService.findByToken(token);
 		UserEntity userEntity = userService.findByUserName(sessionEntity.getUsername());
 		mv.setViewName("/custom/job/jobinfo");
-		if (sessionEntity == null) {
-			mv.addObject("valid",false);
-			return mv;
-		}
 		for(Map<String,Object> map:maps){
 			if(map.get("salary").toString().equals("1")){
 				map.put("salary", "1000-2000");
@@ -151,7 +151,8 @@ public class JobControl extends BaseControl {
 			}
 		}
 		mv.addObject("valid",true);
-		mv.addObject("userId",userEntity.getId());
+		ResumeEntity resumeEntity = resumeService.findOne(userEntity.getId());
+		mv.addObject("resumeId",resumeEntity.getId());
 		mv.addObject("lists",maps);
 		mv.addObject("token", token);
 		return mv;
@@ -161,7 +162,9 @@ public class JobControl extends BaseControl {
 	@RequestMapping("findJob/{job}")
 	public ModelAndView findUnLoginJob(@PathVariable(value="job")String job){
 		ModelAndView mv = new ModelAndView();
-		List<Map<String,Object>> map = jobService.find(job);
+		List<Map<String,Object>> maps = jobService.find(job);
+		mv.addObject("lists",maps);
+		mv.setViewName("/custom/job/jobinfo");
 		return mv;
 	}
 }

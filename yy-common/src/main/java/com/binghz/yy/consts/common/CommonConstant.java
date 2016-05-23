@@ -10,4 +10,7 @@ public class CommonConstant {
 	
 	//用户本地简历保存地址
 	public static String RESUME_SAVE_PATH = "/upload/resume";
+	
+	//用户本地头像保存地址
+	public static String USER_IMG_PATH="/upload/img";
 }

@@ -53,7 +53,12 @@ public class JobService {
 	}
 	
 	public List<Map<String,Object>> find(String job){
-		String sql = "select jobinfo.create_date jobdate,jobinfo.salary,jobinfo.jobname,jobinfo.jobposition,jobinfo.jobrequire,jobinfo.id as jobId,company.companyintroduce ,company.companylocation,company.companyname,company.stage from master.jobinfo jobinfo left join master.company company on jobinfo.company_id=company.id where jobinfo.vaild=1 and jobinfo.jobname like '%"+job+"%'";
+		String sql = "select jobinfo.id,jobinfo.create_date jobdate,jobinfo.salary,jobinfo.jobname,jobinfo.jobposition,jobinfo.jobrequire,jobinfo.id as jobId,company.companyintroduce ,company.companylocation,company.companyname,company.stage from master.jobinfo jobinfo left join master.company company on jobinfo.company_id=company.id where jobinfo.vaild=1 and jobinfo.jobname like '%"+job+"%'";
+		return queryDao.queryMap(sql);
+	}
+	
+	public List<Map<String,Object>> findByCompanyId(String companyId){
+		String sql ="select jobinfo.id as jobid,jobinfo.create_date jobdate,jobinfo.salary,jobinfo.jobname,resume.*,job_resume.state from job_resume left join jobinfo on job_resume.jobid=jobinfo.id left join resume on resume.id=job_resume.resumeid where jobinfo.company_id="+companyId;
 		return queryDao.queryMap(sql);
 	}
 }

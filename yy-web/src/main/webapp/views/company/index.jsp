@@ -33,7 +33,7 @@
 						</div>
 					</div>
 				<div class="col-sm-10">
-					<iframe name="iframepage" id="iframepage" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" onLoad="iFrameHeight()" width="100%"></iframe>
+					<iframe name="iframepage" id="iframepage" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" onLoad="iFrameHeight()" width="100%" height="500px"></iframe>
 				</div>
 			</div>
 		</div>

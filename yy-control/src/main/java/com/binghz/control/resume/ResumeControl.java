@@ -42,8 +42,7 @@ public class ResumeControl {
 	@RequestMapping("save/{token}")
 	public JsonMessage saveResume(@PathVariable(value = "token") String token,
 			String phone, String introduce, String skills, String expectSalary,
-			String id, String position,
-			@RequestParam(value = "file", required = false) MultipartFile file) {
+			String id, String position) {
 		JsonMessage result = new JsonMessage();
 		SessionEntity sessionEntity = sessionService.findByToken(token);
 		UserEntity userEntity = userService.findByUserName(sessionEntity
@@ -56,6 +55,7 @@ public class ResumeControl {
 		resumeEntity.setUpdateDate(new Date());
 		resumeEntity.setPosition(position);
 		resumeEntity.setUserId(userEntity.getId());
+		resumeEntity.setResumeUrl("");
 		resumeEntity.setValid(1);
 		resumeService.save(resumeEntity);
 		result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
@@ -66,7 +66,7 @@ public class ResumeControl {
 	@ResponseBody
 	@RequestMapping("upload/{id}/{token}")
 	public JsonMessage upload(HttpServletRequest request,
-			@RequestParam(value = "file", required = false) MultipartFile file,
+			@RequestParam(value = "resume", required = false) MultipartFile file,
 			@PathVariable(value = "id") String id,
 			@PathVariable(value = "token") String token) {
 		JsonMessage result = new JsonMessage();
@@ -89,14 +89,14 @@ public class ResumeControl {
 		}
 		try {
 			CSDNUtils.getFtpQiNiu().upFile(targetFile,
-					"/" + userEntity.getUserName());
+					"resume/" + userEntity.getUserName());
 		} catch (QiniuException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		ResumeEntity resumeEntity = resumeService.findOne(NumberUtils
 				.toLong(id));
-		resumeEntity.setResumeUrl(CommonConstant.CSDN_MIRRO_LOCATION + "/"
+		resumeEntity.setResumeUrl(CommonConstant.CSDN_MIRRO_LOCATION + "/resume/"
 				+ userEntity.getUserName());
 		resumeService.save(resumeEntity);
 		result.fill(HttpState.HTTP_CHANNEL_SUCCESS,

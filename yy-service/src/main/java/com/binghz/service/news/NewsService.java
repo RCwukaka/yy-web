@@ -54,4 +54,21 @@ public class NewsService {
 		List<Map<String,Object>> map = queryDao.queryMap(sql);
 		return map;
 	}
+	
+	/*
+	 * 返回对应状态的新闻
+	 */
+	public List<Map<String,Object>> findAll(){
+		String sql = "select * from news";
+		List<Map<String,Object>> map = queryDao.queryMap(sql);
+		return map;
+	}
+	
+	/*
+	 * 更新新闻信息
+	 */
+	public void updateStatus(Long id,Integer status){
+		String sql="update news set status='"+status+"' where id='"+id+"'";
+		queryDao.update(sql);
+	}
 }

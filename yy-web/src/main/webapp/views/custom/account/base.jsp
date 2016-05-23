@@ -11,6 +11,47 @@
 	src="${pageContext.request.contextPath}/js/ajaxfileupload.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/upImg.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#saveImg").click(function() {
+		var formData = new FormData($('form')[0]);
+		$(this).button('loading');
+		var imgsrc = $("#userimg").attr("src");
+		var timenow = new Date().getTime();
+		$.ajaxFileUpload({
+			url : '${pageContext.request.contextPath}/account/userImg/${token}',
+			type : 'post',
+			secureuri : false,
+			fileElementId : 'img',
+			dataType : 'application/json',
+			success : function(data, status) {
+				$("#userOnlineImg", window.parent.document).attr("src", imgsrc+"?d="+timenow);
+				$("#saveImg").button('reset');
+			},
+			error : function(data, status, e) {
+				alert(data.message);
+				$("#saveImg").button('reset');
+			}
+		});
+	});
+	$("#saveInfo").click(function() {
+		$(this).button('loading');
+		$.ajax({
+			type : "post",
+			url : "${pageContext.request.contextPath}/account/save/${token}",
+			data : {
+				"nickname" : $("#nickname").val(),
+				"phone" : $("#phone").val(),
+				"introduce" : $("#introduce").val()
+			},
+			dataType : "json",
+			success : function(message) {
+				$('#saveInfo').button('reset');
+			}
+		});
+	});
+})
+</script>
 <style>
 .bho {
 	width: 100px;
@@ -65,29 +106,10 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2 control-label" for="username">帐号</label>
-			<div class="col-sm-6">
-				<input type="text" class="form-control" id="email"
-					placeholder="" value="${username}">
-			</div>
-		</div>
-		<div class="form-group">
 			<label class="col-sm-2 control-label" for="phone">电话</label>
 			<div class="col-sm-6">
 				<input type="text" class="form-control" id="phone"
 					placeholder="" value="${phone}">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label" for="position">职业</label>
-				<div class="col-sm-6">
-					<select class="form-control" id="position">
-						<option value='IT'>IT</option>
-						<option value='finance'>金融</option>
-						<option value="design">设计</option>
-						<option value="civil">文职</option>
-						<option value="operating">运营</option>
-					</select>
 				</div>
 			</div>
 			<div class="form-group">

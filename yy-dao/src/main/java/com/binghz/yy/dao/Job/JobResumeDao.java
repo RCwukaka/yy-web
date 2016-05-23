@@ -12,4 +12,6 @@ public interface JobResumeDao extends PagingAndSortingRepository<JobResumeEntity
 	public List<JobResumeEntity> findByJobId(Long jobId);
 	
 	public List<JobResumeEntity> findByResumeId(Long resumeId);
+	
+	public List<JobResumeEntity> findByResumeIdAndJobId(Long resumeId,Long jobId);
 }

@@ -2,7 +2,6 @@ package com.binghz.control.news;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,10 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.binghz.control.common.BaseControl;
+import com.binghz.service.comment.CommentService;
 import com.binghz.service.news.NewsService;
 import com.binghz.service.user.UserService;
 import com.binghz.yy.consts.common.CommonConstant;
 import com.binghz.yy.consts.common.HttpState;
+import com.binghz.yy.entity.common.comment.CommentEntity;
 import com.binghz.yy.entity.common.news.NewsEntity;
 import com.binghz.yy.entity.common.user.UserEntity;
 import com.binghz.yy.session.entity.SessionEntity;
@@ -43,6 +44,8 @@ public class NewsConrol extends BaseControl {
 	private SessionService sessionService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CommentService commentService;
 
 	@ResponseBody
 	@RequestMapping("save/{token}")
@@ -65,7 +68,7 @@ public class NewsConrol extends BaseControl {
 		newsEntity.setBriefContent(briefContent);
 		newsEntity.setClassification(1);
 		newsEntity.setCreateDate(new Date());
-		newsEntity.setStatus(1); // /状态暂定为1
+		newsEntity.setStatus(0); // /状态暂定为1
 		newsEntity.setContent(content);
 		newsEntity.setUpdateDate(new Date());
 		newsEntity.setTitle(title);
@@ -136,17 +139,21 @@ public class NewsConrol extends BaseControl {
 		mv.addObject("id", newsEntity.getId());
 		mv.addObject("date", newsEntity.getUpdateDate());
 		UserEntity userEntity = userService.findOne(newsEntity.getAuthorid());
+		List<Map<String, Object>> lists = commentService.findUserNameComment(NumberUtils.toLong(id));
 		mv.addObject("nickname", userEntity.getNickname());
 		mv.addObject("articlenum", userEntity.getArticlenum());
 		mv.addObject("introduce", userEntity.getIntroduce());
-		if (token == "") {
+		mv.addObject("imgSrc",userEntity.getImgSrc()+"?d="+new Date().getTime());
+		mv.addObject("lists",lists);
+		if (token == null) {
 			return mv;
 		}
 		SessionEntity sessionEntity = sessionService.findByToken(token);
+		UserEntity userEntityLogin = userService.findByUserName(sessionEntity.getUsername());
 		mv.addObject("isLogin", isLogin(token));
 		mv.addObject("isAlive", isAlive(token));
+		mv.addObject("userId",userEntityLogin.getId());
 		mv.addObject("token", token);
-		mv.addObject("imgSrc", sessionEntity.getImgSrc());
 		return mv;
 	}
 

@@ -13,6 +13,10 @@ public class CommentEntity extends IdEntity {
 	private String commentContent;
 	@Column(name = "status")
 	private Integer status;
+	@Column(name="newsid")
+	private Long newsId;
+	@Column(name="userid")
+	private Long userId;
 
 	public String getCommentContent() {
 		return commentContent;
@@ -25,4 +29,26 @@ public class CommentEntity extends IdEntity {
 	public int getStatus() {
 		return status;
 	}
+
+	public Long getNewsId() {
+		return newsId;
+	}
+
+	public void setNewsId(Long newsId) {
+		this.newsId = newsId;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	
+	
 }

@@ -22,18 +22,10 @@
 				<div class="col-sm-2">
 						<div class="list-group">
 							<a href="#" class="list-group-item disabled">常用操作</a> 
-							<a href="/system-web/admin/news" class="list-group-item" target="iframepage">新闻管理</a> 
-							<a href="/system-web/activity" class="list-group-item" target="iframepage">网页管理</a> 
-							<a href="#" class="list-group-item" target="iframepage">留言管理</a> 
-							<a href="#" class="list-group-item" target="iframepage">评论管理</a>
-							<a href="content/visit.jsp" class="list-group-item" target="iframepage">访客统计</a>
-							<a href="#" class="list-group-item" target="iframepage">用户管理</a>
-							<a href="#" class="list-group-item" target="iframepage">公司注册审核</a>
-							<a href="#" class="list-group-item disabled">系统设置</a>
-							<a href="#" class="list-group-item" target="iframepage">系统日志</a>
-							<a href="#" class="list-group-item" target="iframepage">数据备份</a>
-							<a href="#" class="list-group-item" target="iframepage">系统参数</a>
-							<a href="#" class="list-group-item" target="iframepage">权限管理</a>
+							<a href="${pageContext.request.contextPath}/admin/news" class="list-group-item" target="iframepage">新闻管理</a> 
+							<a href="${pageContext.request.contextPath}/admin/page" class="list-group-item" target="iframepage">网页管理</a> 
+							<a href="${pageContext.request.contextPath}/admin/comment" class="list-group-item" target="iframepage">评论管理</a>
+							<a href="${pageContext.request.contextPath}/admin/visitNum" class="list-group-item" target="iframepage">访客统计</a>
 						</div>
 					</div>
 				<div class="col-sm-10">

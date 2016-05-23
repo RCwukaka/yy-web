@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.binghz.service.company.CompanyService;
 import com.binghz.service.job.JobService;
 import com.binghz.yy.consts.common.HttpState;
@@ -24,7 +23,6 @@ import com.binghz.yy.entity.common.company.CompanyEntity;
 import com.binghz.yy.entity.common.job.JobInfoEntity;
 import com.binghz.yy.utils.EncodeUtils;
 import com.binghz.yy.utils.JsonMessage;
-import com.binghz.yy.utils.JsonUtils;
 import com.binghz.yy.utils.StringUtils;
 
 @Controller
@@ -106,14 +104,14 @@ public class CompanyControl {
 	@ResponseBody
 	@RequestMapping("changeInfo")
 	public JsonMessage changeInfo(
-			@RequestParam("companyId")String companyId,
+			@RequestParam("companyId") String companyId,
 			@RequestParam("companylocation") String companylocation,
 			@RequestParam("companyemployernumber") String companyemployernumber,
 			@RequestParam("companyintroduce") String companyintroduce,
 			@RequestParam("stage") String stage) {
 		JsonMessage result = new JsonMessage();
-		companyService.update(stage, companylocation,
-				companyemployernumber, companyintroduce);
+		companyService.update(stage, companylocation, companyemployernumber,
+				companyintroduce);
 		result.fill(HttpState.HTTP_CHANNEL_SUCCESS,
 				HttpState.HTTP_CHANNEL_SUCCESS_STR);
 		return result;
@@ -158,6 +156,8 @@ public class CompanyControl {
 	public ModelAndView resumeChancelView(
 			@PathVariable(value = "companyId") String companyId) {
 		ModelAndView mv = new ModelAndView();
+		List<Map<String, Object>> lists = jobService.findByCompanyId(companyId);
+		mv.addObject("lists",lists);
 		mv.addObject("companyId", companyId);
 		mv.setViewName("/company/resume");
 		return mv;
