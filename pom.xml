@@ -23,7 +23,7 @@
 		<guava.version>18.0</guava.version>
 		<commons-codec.version>1.10</commons-codec.version>
 		<commons-lang3.version>3.4</commons-lang3.version>
-		<jackson.version>2.4.4</jackson.version>
+		<jackson.version>2.10.0</jackson.version>
 		<freemarker.version>2.3.20</freemarker.version>
 		<project.version>0.0.1-SNAPSHOT</project.version>
 	</properties>
